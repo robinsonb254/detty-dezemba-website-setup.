@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090511">
+  <title>Detty Dezemba Festival | Nairobi</title>
+  <meta name="description" content="Detty Dezemba Festival — music, dance, culture and good vibes at Laureate Gardens, Nairobi on 12 December 2026.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#home"><span class="crown">♛</span><span>DETTY DEZEMBA<br><b>FESTIVAL</b></span></a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Open navigation">☰</button>
+    <nav id="nav">
+      <a href="#home">Home</a><a href="#tickets">Tickets</a><a href="#event">Event info</a>
+      <a href="#lineup">Lineup</a><a href="#faq">FAQ</a><a href="#terms">Terms</a><a href="#contact">Contact</a>
+    </nav>
+    <a class="account-link" href="#tickets">Get tickets <span>↗</span></a>
+  </header>
+
+  <section class="security-alert" aria-label="Official ticketing security alert">
+    <div class="security-alert-inner">
+      <p class="security-kicker">SECURITY ALERT</p>
+      <h2>ONE FESTIVAL. ONE OFFICIAL WEBSITE.</h2>
+      <a href="https://dettydezembaticketsexp.shop" target="_blank" rel="noopener noreferrer">https://dettydezembaticketsexp.shop</a>
+      <p>Beware of fake ticket links, impersonators and fraudulent payment requests. Only purchase tickets through our official website.</p>
+      <strong>Never share your M-Pesa PIN, OTP or banking passwords.</strong>
+    </div>
+  </section>
+
+  <main id="home">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">MUSIC • DANCE • CULTURE • GOOD VIBES</p>
+        <h1>DETTY<br><em>DEZEMBA</em><br><span>FESTIVAL</span></h1>
+        <p class="hero-sub">LIVE IN NAIROBI</p>
+        <div class="hero-meta">
+          <span>◷ SATURDAY, 12 DECEMBER 2026</span>
+          <span>⌖ LAUREATE GARDENS, NAIROBI</span>
+        </div>
+        <a class="cta" href="#tickets">CHOOSE YOUR TICKET <b>→</b></a>
+      </div>
+      <div class="hero-art">
+        <img src="assets/wizkid-reference.jpg" alt="Wizkid promotional reference photo">
+        <div class="hero-stamp">ONE NIGHT<br><strong>ONLY</strong></div>
+      </div>
+    </section>
+
+    <section class="ticker"><span>★ WIZKID</span><span>★ DANCER FAITH</span><span>★ UNCLE WAFFLES</span><span>★ AND MORE ARTISTS</span></section>
+
+    <section class="intro section" id="event">
+      <div>
+        <p class="eyebrow">THE EXPERIENCE</p>
+        <h2>Make December <em>unforgettable.</em></h2>
+        <p>Get ready for a high-energy festival experience bringing music, dance and culture together at Laureate Gardens, Nairobi.</p>
+        <p class="small-note">Artist appearances and supporting lineup are subject to final confirmation by the event organiser.</p>
+      </div>
+      <div class="event-card">
+        <div><small>DATE</small><strong>12 DEC</strong><span>2026 • SATURDAY</span></div>
+        <div><small>VENUE</small><strong>LAUREATE</strong><span>GARDENS, NAIROBI</span></div>
+      </div>
+    </section>
+
+    <section class="lineup section" id="lineup">
+      <div class="section-heading"><p class="eyebrow">THE LINEUP</p><h2>Artists & <em>performers</em></h2></div>
+      <div class="artist-grid">
+        <article class="artist-card">
+          <img src="assets/faith-reference.png" alt="Wizkid performer photo">
+          <div><small>HEADLINER</small><h3>Wizkid</h3><p>Live in concert</p></div>
+        </article>
+        <article class="artist-card faith">
+          <img src="assets/wizkid-reference.jpg" alt="Dancer Faith performer photo">
+          <div><small>FEATURED DANCER</small><h3>Faith</h3><p>Dance performance</p></div>
+        </article>
+        <article class="artist-card text-card">
+          <img src="assets/dj-performer-photo.jpeg" alt="DJ performer photo">
+          <div><small>SUPPORTING LINEUP</small><h3>Uncle Waffles</h3><p>South African DJ & producer</p></div>
+        </article>
+      </div>
+      <p class="small-note">Promotional lineup shown as supplied by the organiser. Confirm artist contracts and permissions before publishing ticket sales.</p>
+    </section>
+
+    <section class="tickets section" id="tickets">
+      <div class="section-heading"><p class="eyebrow">SECURE YOUR PLACE</p><h2>Choose your <em>ticket</em></h2><p>Select quantities and continue to checkout.</p></div>
+      <div class="ticket-layout">
+        <div class="ticket-list">
+          <article class="ticket-row" data-type="Regular" data-price="1000">
+            <div class="ticket-icon">★</div><div class="ticket-info"><h3>REGULAR</h3><p>General access</p></div>
+            <strong>KSh 1,000</strong><div class="qty"><button aria-label="Remove Regular ticket">−</button><output>0</output><button aria-label="Add Regular ticket">+</button></div>
+          </article>
+          <article class="ticket-row" data-type="VIP" data-price="5000">
+            <div class="ticket-icon purple">♛</div><div class="ticket-info"><h3>VIP</h3><p>Premium access</p></div>
+            <strong>KSh 5,000</strong><div class="qty"><button aria-label="Remove VIP ticket">−</button><output>0</output><button aria-label="Add VIP ticket">+</button></div>
+          </article>
+          <article class="ticket-row" data-type="VVIP" data-price="10000">
+            <div class="ticket-icon orange">◆</div><div class="ticket-info"><h3>VVIP</h3><p>Exclusive experience</p></div>
+            <strong>KSh 10,000</strong><div class="qty"><button aria-label="Remove VVIP ticket">−</button><output>0</output><button aria-label="Add VVIP ticket">+</button></div>
+          </article>
+          <div class="total-line"><span id="ticketCount">0 tickets selected</span><strong id="total">KSh 0</strong></div>
+          <button class="cta checkout-btn" id="checkoutBtn" disabled>PROCEED TO CHECKOUT <b>→</b></button>
+          <p class="secure-note">🔒 Payment processing will activate after merchant accounts and payment credentials are connected.</p>
+        </div>
+        <aside class="payment-card">
+          <p class="eyebrow">PAYMENT OPTIONS PLANNED</p>
+          <div class="payment-method"><b class="mpesa">M-PESA</b><span>Till or Paybill</span></div>
+          <div class="payment-method"><b class="paypal">PayPal</b><span>International payments</span></div>
+          <div class="payment-method"><b class="cards">VISA · Mastercard</b><span>Debit and credit cards</span></div>
+          <p class="small-note">Available methods depend on the merchant gateway approval and final configuration.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="faq section" id="faq">
+      <div class="section-heading"><p class="eyebrow">NEED TO KNOW</p><h2>Frequently asked <em>questions</em></h2></div>
+      <details><summary>When and where is the festival?</summary><p>Saturday, 12 December 2026 at Laureate Gardens, Nairobi.</p></details>
+      <details><summary>What ticket categories are available?</summary><p>Regular (KSh 1,000), VIP (KSh 5,000) and VVIP (KSh 10,000).</p></details>
+      <details><summary>How will I receive my ticket?</summary><p>Once live payment processing is connected, successful purchases will receive a digital ticket and unique QR code by email or SMS.</p></details>
+      <details><summary>Which payment methods will be accepted?</summary><p>M-Pesa Till/Paybill, PayPal and Visa/Mastercard are planned. Payment options will appear at checkout after integration is complete.</p></details>
+    </section>
+  </main>
+
+
+    <section class="terms section" id="terms">
+      <div class="section-heading">
+        <p class="eyebrow">PLEASE READ BEFORE PURCHASE</p>
+        <h2>Terms & <em>Conditions</em></h2>
+      </div>
+      <div class="terms-content">
+        <ul>
+          <li>All purchased tickets are non-refundable and non-exchangeable for change of mind or inability to attend, subject to applicable Kenyan law.</li>
+          <li>Tickets are valid only after successful payment confirmation.</li>
+          <li>Counterfeit, duplicated or already-redeemed tickets will not be accepted.</li>
+          <li>Ticket transfers and resale require organiser authorisation.</li>
+          <li>The organiser may make reasonable changes to performers, schedules or programme arrangements.</li>
+          <li>Significant event changes will be communicated to ticket holders.</li>
+          <li>Security screening will apply at the venue.</li>
+          <li>Weapons, illegal substances and dangerous objects are prohibited.</li>
+        </ul>
+        <div class="terms-contact">
+          <h3>Official Contact Details</h3>
+          <p><strong>Email:</strong> <a href="mailto:detty.dezembatickets@gmail.com">detty.dezembatickets@gmail.com</a></p>
+          <p><strong>Phone:</strong> <a href="tel:0782509438">0782509438</a></p>
+          <p><strong>Official website:</strong> <a href="https://dettydezembaticketsexp.shop" target="_blank" rel="noopener noreferrer">https://dettydezembaticketsexp.shop</a></p>
+        </div>
+      </div>
+    </section>
+
+  <section class="contact-section section" id="contact">
+    <div class="section-heading">
+      <p class="eyebrow">GET IN TOUCH</p>
+      <h2>Official <em>Contact Details</em></h2>
+    </div>
+    <div class="contact-details">
+      <p><strong>Email:</strong> <a href="mailto:detty.dezembatickets@gmail.com">detty.dezembatickets@gmail.com</a></p>
+      <p><strong>Phone:</strong> <a href="tel:0782509438">0782509438</a></p>
+      <p><strong>Official website:</strong> <a href="https://dettydezembaticketsexp.shop" target="_blank" rel="noopener noreferrer">https://dettydezembaticketsexp.shop</a></p>
+    </div>
+  </section>
+
+  <footer>
+    <a class="brand" href="#home"><span class="crown">♛</span><span>DETTY DEZEMBA<br><b>FESTIVAL</b></span></a>
+    <p>Laureate Gardens • Nairobi, Kenya</p>
+    <div class="footer-contact">
+      <p><strong>Email:</strong> <a href="mailto:detty.dezembatickets@gmail.com">detty.dezembatickets@gmail.com</a></p>
+      <p><strong>Phone:</strong> <a href="tel:0782509438">0782509438</a></p>
+      <p><strong>Official website:</strong> <a href="https://dettydezembaticketsexp.shop" target="_blank" rel="noopener noreferrer">https://dettydezembaticketsexp.shop</a></p>
+    </div>
+    <small>© 2026 Detty Dezemba Festival. All rights reserved.</small>
+  </footer>
+
+  <dialog id="checkoutDialog">
+    <form method="dialog" class="dialog-inner">
+      <button class="close" aria-label="Close">×</button>
+      <p class="eyebrow">TICKET CHECKOUT</p><h2>Your order</h2>
+      <div id="orderSummary"></div>
+      <label>Full name<input id="buyerName" autocomplete="name" placeholder="Your full name" required></label>
+      <label>Email address<input id="buyerEmail" type="email" autocomplete="email" placeholder="you@example.com" required></label>
+      <label>Phone number<input id="buyerPhone" type="tel" autocomplete="tel" placeholder="07xx xxx xxx" required></label>
+      <label>Preferred payment method
+        <select id="paymentChoice"><option>M-Pesa Till</option><option>M-Pesa Paybill</option><option>PayPal</option><option>Visa / Mastercard</option></select>
+      </label>
+      <p class="notice">This is a design preview. No payment will be collected and no ticket will be issued until the payment gateway, order database and ticket delivery service are connected.</p>
+      <button class="cta" id="requestSetup" type="button">SAVE CHECKOUT REQUIREMENTS</button>
+    </form>
+  </dialog>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
