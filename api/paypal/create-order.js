@@ -1,12 +1,15 @@
-const prices = {
-  Regular: "7.70",
-  VIP: "38.47",
-  VVIP: "76.95"
+
+const pricesInCents = {
+  Regular: 770,
+  VIP: 3848,
+  VVIP: 7695
 };
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
+    return res.status(405).json({
+      error: "Method not allowed"
+    });
   }
 
   try {
@@ -17,17 +20,51 @@ export default async function handler(req, res) {
       throw new Error("PayPal credentials are missing");
     }
 
-    const ticketType = req.body?.ticketType;
-    const quantity = Number(req.body?.quantity);
+    const tickets = req.body?.tickets;
 
     if (
-      !prices[ticketType] ||
-      !Number.isInteger(quantity) ||
-      quantity < 1 ||
-      quantity > 10
+      !Array.isArray(tickets) ||
+      tickets.length < 1 ||
+      tickets.length > 3
     ) {
-      return res.status(400).json({ error: "Invalid ticket selection" });
+      return res.status(400).json({
+        error: "Invalid ticket selection"
+      });
     }
+
+    const seen = new Set();
+
+    for (const ticket of tickets) {
+      if (
+        !ticket ||
+        !Object.prototype.hasOwnProperty.call(
+          pricesInCents,
+          ticket.type
+        ) ||
+        !Number.isInteger(ticket.quantity) ||
+        ticket.quantity < 1 ||
+        ticket.quantity > 10 ||
+        seen.has(ticket.type)
+      ) {
+        return res.status(400).json({
+          error: "Invalid ticket selection"
+        });
+      }
+
+      seen.add(ticket.type);
+    }
+
+    const totalCents = tickets.reduce(
+      (sum, ticket) =>
+        sum + pricesInCents[ticket.type] * ticket.quantity,
+      0
+    );
+
+    const amount = (totalCents / 100).toFixed(2);
+
+    const description = tickets.map(ticket =>
+      `${ticket.quantity} x ${ticket.type}`
+    ).join(", ");
 
     const auth = Buffer.from(
       `${clientId}:${clientSecret}`
@@ -51,10 +88,6 @@ export default async function handler(req, res) {
       throw new Error("PayPal authentication failed");
     }
 
-    const amount = (
-      Number(prices[ticketType]) * quantity
-    ).toFixed(2);
-
     const orderResponse = await fetch(
       "https://api-m.paypal.com/v2/checkout/orders",
       {
@@ -66,7 +99,7 @@ export default async function handler(req, res) {
         body: JSON.stringify({
           intent: "CAPTURE",
           purchase_units: [{
-            description: `Detty Dezemba Festival - ${ticketType} ticket`,
+            description: `Detty Dezemba Festival - ${description}`,
             amount: {
               currency_code: "USD",
               value: amount
@@ -79,6 +112,7 @@ export default async function handler(req, res) {
     const order = await orderResponse.json();
 
     if (!orderResponse.ok) {
+      console.error("PayPal order error:", order);
       throw new Error("Could not create PayPal order");
     }
 
@@ -89,6 +123,7 @@ export default async function handler(req, res) {
 
   } catch (error) {
     console.error("PayPal error:", error.message);
+
     return res.status(500).json({
       error: "Unable to start PayPal checkout"
     });
