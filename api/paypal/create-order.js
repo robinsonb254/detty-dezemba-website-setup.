@@ -7,29 +7,27 @@ const pricesInCents = {
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
-    return res.status(405).json({
-      error: "Method not allowed"
-    });
+    return res.status(405).json({ error: "Method not allowed" });
   }
+
+  let stage = "initialisation";
 
   try {
     const clientId = process.env.PAYPAL_CLIENT_ID;
     const clientSecret = process.env.PAYPAL_CLIENT_SECRET;
 
     if (!clientId || !clientSecret) {
+      console.error("PayPal credentials missing:", {
+        clientIdPresent: !!clientId,
+        clientSecretPresent: !!clientSecret
+      });
       throw new Error("PayPal credentials are missing");
     }
 
     const tickets = req.body?.tickets;
 
-    if (
-      !Array.isArray(tickets) ||
-      tickets.length < 1 ||
-      tickets.length > 3
-    ) {
-      return res.status(400).json({
-        error: "Invalid ticket selection"
-      });
+    if (!Array.isArray(tickets) || tickets.length < 1 || tickets.length > 3) {
+      return res.status(400).json({ error: "Invalid ticket selection" });
     }
 
     const seen = new Set();
@@ -37,38 +35,30 @@ export default async function handler(req, res) {
     for (const ticket of tickets) {
       if (
         !ticket ||
-        !Object.prototype.hasOwnProperty.call(
-          pricesInCents,
-          ticket.type
-        ) ||
+        !Object.prototype.hasOwnProperty.call(pricesInCents, ticket.type) ||
         !Number.isInteger(ticket.quantity) ||
         ticket.quantity < 1 ||
         ticket.quantity > 10 ||
         seen.has(ticket.type)
       ) {
-        return res.status(400).json({
-          error: "Invalid ticket selection"
-        });
+        return res.status(400).json({ error: "Invalid ticket selection" });
       }
-
       seen.add(ticket.type);
     }
 
     const totalCents = tickets.reduce(
-      (sum, ticket) =>
-        sum + pricesInCents[ticket.type] * ticket.quantity,
+      (sum, ticket) => sum + pricesInCents[ticket.type] * ticket.quantity,
       0
     );
 
     const amount = (totalCents / 100).toFixed(2);
+    const description = tickets
+      .map(ticket => `${ticket.quantity} x ${ticket.type}`)
+      .join(", ");
 
-    const description = tickets.map(ticket =>
-      `${ticket.quantity} x ${ticket.type}`
-    ).join(", ");
+    const auth = Buffer.from(`${clientId}:${clientSecret}`).toString("base64");
 
-    const auth = Buffer.from(
-      `${clientId}:${clientSecret}`
-    ).toString("base64");
+    stage = "PayPal authentication";
 
     const tokenResponse = await fetch(
       "https://api-m.paypal.com/v1/oauth2/token",
@@ -82,11 +72,26 @@ export default async function handler(req, res) {
       }
     );
 
-    const tokenData = await tokenResponse.json();
+    const tokenText = await tokenResponse.text();
+    let tokenData;
 
-    if (!tokenResponse.ok) {
-      throw new Error("PayPal authentication failed");
+    try {
+      tokenData = JSON.parse(tokenText);
+    } catch {
+      throw new Error(
+        `PayPal authentication returned an unreadable response (HTTP ${tokenResponse.status})`
+      );
     }
+
+    if (!tokenResponse.ok || !tokenData.access_token) {
+      console.error("PayPal authentication failure:", {
+        status: tokenResponse.status,
+        response: tokenData
+      });
+      throw new Error(`PayPal authentication failed (HTTP ${tokenResponse.status})`);
+    }
+
+    stage = "PayPal order creation";
 
     const orderResponse = await fetch(
       "https://api-m.paypal.com/v2/checkout/orders",
@@ -109,11 +114,23 @@ export default async function handler(req, res) {
       }
     );
 
-    const order = await orderResponse.json();
+    const orderText = await orderResponse.text();
+    let order;
 
-    if (!orderResponse.ok) {
-      console.error("PayPal order error:", order);
-      throw new Error("Could not create PayPal order");
+    try {
+      order = JSON.parse(orderText);
+    } catch {
+      throw new Error(
+        `PayPal order creation returned an unreadable response (HTTP ${orderResponse.status})`
+      );
+    }
+
+    if (!orderResponse.ok || !order.id) {
+      console.error("PayPal order creation failure:", {
+        status: orderResponse.status,
+        response: order
+      });
+      throw new Error(`PayPal order creation failed (HTTP ${orderResponse.status})`);
     }
 
     return res.status(200).json({
@@ -122,7 +139,10 @@ export default async function handler(req, res) {
     });
 
   } catch (error) {
-    console.error("PayPal error:", error.message);
+    console.error("PayPal checkout failure:", {
+      stage,
+      message: error.message
+    });
 
     return res.status(500).json({
       error: "Unable to start PayPal checkout"
