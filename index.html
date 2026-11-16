@@ -135,9 +135,8 @@
       <label>Phone number<input id="buyerPhone" type="tel" autocomplete="tel" placeholder="07xx xxx xxx" required></label>
       <label>Preferred payment method
         <select id="paymentChoice"><option>M-Pesa Till</option><option>M-Pesa Paybill</option><option>PayPal</option><option>Visa / Mastercard</option></select>
-      </label>
-      <p class="notice">This is a design preview. No payment will be collected and no ticket will be issued until the payment gateway, order database and ticket delivery service are connected.</p>
-      <button class="cta" id="requestSetup" type="button">SAVE CHECKOUT REQUIREMENTS</button>
+      </label><div id="paypal-button-container" hidden></div>
+     <p class="notice">Complete your payment using the selected payment method. Tickets are subject to payment confirmation.</p>
     </form>
   </dialog>
   <div id="toast" role="status" aria-live="polite"></div>
