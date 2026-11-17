@@ -255,16 +255,18 @@ document.getElementById("mpesa-pay-button").addEventListener("click", async () =
     const response = await fetch("/api/mpesa/stk-push", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        phoneNumber: buyer.phone,
-        tickets,
-        buyer
-      })
-    });
+     body: JSON.stringify({
+  phoneNumber: buyer.phone,
+  tickets: tickets.map(ticket => ({
+    category: ticket.type,
+    quantity: ticket.quantity
+  })),
+  buyer
+})
 
     const result = await response.json();
 
-    if (!response.ok || result.ResponseCode !== "0") {
+  if (!response.ok || !result.success) {
       throw new Error(result.error || result.errorMessage || "M-Pesa request failed.");
     }
 
