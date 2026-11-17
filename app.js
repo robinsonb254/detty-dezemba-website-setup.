@@ -283,7 +283,7 @@ paymentChoice.addEventListener("change", () => {
 
   const mpesaContainer = document.getElementById("mpesa-payment-container");
 
-  mpesaContainer.hidden = true;
+  mpesaContainer.hidden = false;
 
   if (paymentChoice.value === "PayPal") {
     renderPayPalButtons();
