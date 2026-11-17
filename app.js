@@ -76,7 +76,7 @@ checkoutBtn.addEventListener("click", () => {
     `<hr><strong>Total: ${money(total)}</strong>`;
 
   dialog.showModal();
-});updatePaymentDisplay();
+});
 
 function getBuyerDetails() {
   const name = document.getElementById("buyerName").value.trim();
@@ -216,28 +216,9 @@ async function renderPayPalButtons() {
            <p>Please keep this reference for your records.</p>`;
 
         paypalRendered = true;
-      },
-
-      onCancel: () => {
-        showToast("Payment was cancelled. No payment was completed.");
-      },
-
-      onError: error => {
-        console.error("PayPal error:", error);
-        showToast(error.message || "PayPal checkout encountered an error. Please try again.");
-      }
-    }).render("#paypal-button-container");
-
-    paypalRendered = true;
-  } catch (error) {
-    console.error(error);
-    paypalContainer.innerHTML = "";
-    showToast(error.message || "Unable to load PayPal. Please try again.");
-  }
-}
+  
 document.getElementById("mpesa-pay-button").addEventListener("click", async () => {
   const buyer = getBuyerDetails();
-
   if (!buyer) return;
 
   const tickets = selectedTickets();
@@ -255,14 +236,32 @@ document.getElementById("mpesa-pay-button").addEventListener("click", async () =
     const response = await fetch("/api/mpesa/stk-push", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-     body: JSON.stringify({
-  phoneNumber: buyer.phone,
-  tickets: tickets.map(ticket => ({
-    category: ticket.type,
-    quantity: ticket.quantity
-  })),
-  buyer
-})
+      body: JSON.stringify({
+        phoneNumber: buyer.phone,
+        tickets: tickets.map(ticket => ({
+          category: ticket.type,
+          quantity: ticket.quantity
+        })),
+        buyer
+      })
+    });
+
+    const result = await response.json();
+
+    if (!response.ok || !result.success) {
+      throw new Error(result.error || result.errorMessage || "M-Pesa request failed.");
+    }
+
+    showToast("M-Pesa prompt sent. Enter your PIN on your phone to pay.");
+    button.textContent = "Payment request sent";
+
+  } catch (error) {
+    showToast(error.message || "M-Pesa payment failed. Please try again.");
+    button.disabled = false;
+    button.textContent = "Pay with M-Pesa";
+  }
+});
+
 
     const result = await response.json();
 
@@ -295,3 +294,4 @@ function updatePaymentDisplay() {
 }
 
 paymentChoice.addEventListener("change", updatePaymentDisplay);
+update();
