@@ -189,18 +189,15 @@ async function renderPayPalButtons() {
 
         showToast("Payment approved. Confirming your payment...");
 
-        const response = await fetch("/api/paypal/capture-order", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-         body: JSON.stringify({
-  phoneNumber: buyer.phone,
-  tickets: tickets.map(ticket => ({
-    category: ticket.type,
-    quantity: ticket.quantity
-  })),
-  buyer
-})
-
+       const response = await fetch("/api/paypal/capture-order", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    orderID: data.orderID,
+    buyer,
+    tickets: currentTickets
+  })
+});
         const result = await response.json();
 
         if (!response.ok || !result.success || result.status !== "COMPLETED") {
