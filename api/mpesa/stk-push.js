@@ -34,6 +34,7 @@ export default async function handler(req, res) {
     }
 
     const phone = String(phoneNumber).replace(/\D/g, "");
+
     const normalizedPhone =
       phone.startsWith("0") ? "254" + phone.slice(1) :
       phone.startsWith("254") ? phone :
@@ -45,20 +46,13 @@ export default async function handler(req, res) {
       });
     }
 
-    const prices = {
-      Regular: 1000,
-      VIP: 5000,
-      VVIP: 10000
-    };
-
-    let amount = 0;
+    const validCategories = ["Regular", "VIP", "VVIP"];
 
     for (const ticket of tickets) {
-      const price = prices[ticket.category];
       const quantity = Number(ticket.quantity);
 
       if (
-        !price ||
+        !validCategories.includes(ticket.category) ||
         !Number.isInteger(quantity) ||
         quantity < 1 ||
         quantity > 20
@@ -67,15 +61,10 @@ export default async function handler(req, res) {
           error: "Invalid ticket selection."
         });
       }
-
-      amount += price * quantity;
     }
 
-    if (!Number.isInteger(amount) || amount < 1) {
-      return res.status(400).json({
-        error: "Invalid payment amount."
-      });
-    }
+    // TEMPORARY LIVE TEST AMOUNT
+    const amount = 50;
 
     const auth = Buffer.from(
       `${MPESA_CONSUMER_KEY}:${MPESA_CONSUMER_SECRET}`
@@ -94,16 +83,16 @@ export default async function handler(req, res) {
       throw new Error("Could not authenticate with Safaricom.");
     }
 
-  const timestamp = new Intl.DateTimeFormat("en-GB", {
-  timeZone: "Africa/Nairobi",
-  year: "numeric",
-  month: "2-digit",
-  day: "2-digit",
-  hour: "2-digit",
-  minute: "2-digit",
-  second: "2-digit",
-  hourCycle: "h23"
-}).format(new Date()).replace(/\D/g, "");
+    const timestamp = new Intl.DateTimeFormat("en-GB", {
+      timeZone: "Africa/Nairobi",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hourCycle: "h23"
+    }).format(new Date()).replace(/\D/g, "");
 
     const password = Buffer.from(
       MPESA_SHORTCODE + MPESA_PASSKEY + timestamp
@@ -128,8 +117,8 @@ export default async function handler(req, res) {
           PhoneNumber: normalizedPhone,
           CallBackURL:
             "https://detty-dezemba-website-setup.vercel.app/api/mpesa/callback",
-          AccountReference: "DETTYDEZEMBA",
-          TransactionDesc: "Festival ticket payment"
+          AccountReference: "DETTYTEST",
+          TransactionDesc: "KSh 50 payment test"
         })
       }
     );
@@ -138,20 +127,22 @@ export default async function handler(req, res) {
 
     if (!stkResponse.ok || result.ResponseCode !== "0") {
       return res.status(400).json({
-        error: result.errorMessage || result.ResponseDescription ||
+        error: result.errorMessage ||
+          result.ResponseDescription ||
           "Safaricom could not initiate the payment."
       });
     }
 
     return res.status(200).json({
       success: true,
-      message: "Payment prompt sent. Check your phone and enter your M-Pesa PIN.",
+      message: "KSh 50 test payment prompt sent. Check your phone.",
       checkoutRequestID: result.CheckoutRequestID,
       merchantRequestID: result.MerchantRequestID
     });
 
   } catch (error) {
     console.error("M-Pesa STK error:", error);
+
     return res.status(500).json({
       error: "Unable to initiate M-Pesa payment. Please try again."
     });
