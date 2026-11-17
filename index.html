@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -73,7 +74,6 @@
           <div><small>SUPPORTING LINEUP</small><h3>Uncle Waffles</h3><p>South African DJ & producer</p></div>
         </article>
       </div>
-      <p class="small-note">Promotional lineup shown as supplied by the organiser. Confirm artist contracts and permissions before publishing ticket sales.</p>
     </section>
 
     <section class="tickets section" id="tickets">
@@ -94,14 +94,13 @@
           </article>
           <div class="total-line"><span id="ticketCount">0 tickets selected</span><strong id="total">KSh 0</strong></div>
           <button class="cta checkout-btn" id="checkoutBtn" disabled>PROCEED TO CHECKOUT <b>→</b></button>
-          <p class="secure-note">🔒 Payment processing will activate after merchant accounts and payment credentials are connected.</p>
         </div>
         <aside class="payment-card">
-          <p class="eyebrow">PAYMENT OPTIONS PLANNED</p>
-          <div class="payment-method"><b class="mpesa">M-PESA</b><span>Till or Paybill</span></div>
+          <p class="eyebrow">PAYMENT OPTIONS</p>
+          <div class="payment-method"><b class="mpesa">M-PESA</b><span>Till payments</span></div>
           <div class="payment-method"><b class="paypal">PayPal</b><span>International payments</span></div>
           <div class="payment-method"><b class="cards">VISA · Mastercard</b><span>Debit and credit cards</span></div>
-          <p class="small-note">Available methods depend on the merchant gateway approval and final configuration.</p>
+          <p class="small-note">Available methods depend on merchant gateway approval and final configuration.</p>
         </aside>
       </div>
     </section>
@@ -111,7 +110,7 @@
       <details><summary>When and where is the festival?</summary><p>Saturday, 12 December 2026 at Laureate Gardens, Nairobi.</p></details>
       <details><summary>What ticket categories are available?</summary><p>Regular (KSh 1,000), VIP (KSh 5,000) and VVIP (KSh 10,000).</p></details>
       <details><summary>How will I receive my ticket?</summary><p>Once live payment processing is connected, successful purchases will receive a digital ticket and unique QR code by email or SMS.</p></details>
-      <details><summary>Which payment methods will be accepted?</summary><p>M-Pesa Till/Paybill, PayPal and Visa/Mastercard are planned. Payment options will appear at checkout after integration is complete.</p></details>
+      <details><summary>Which payment methods will be accepted?</summary><p>M-Pesa Till, PayPal and Visa/Mastercard are planned. Payment options will appear at checkout after integration is complete.</p></details>
     </section>
   </main>
 
@@ -134,13 +133,20 @@
       <label>Email address<input id="buyerEmail" type="email" autocomplete="email" placeholder="you@example.com" required></label>
       <label>Phone number<input id="buyerPhone" type="tel" autocomplete="tel" placeholder="07xx xxx xxx" required></label>
       <label>Preferred payment method
-        <select id="paymentChoice"><option>M-Pesa Till</option><option>M-Pesa Paybill</option><option>PayPal</option><option>Visa / Mastercard</option></select>
-      </label><div id="paypal-button-container" hidden></div><div id="mpesa-payment-container" hidden>
-  <button type="button" id="mpesa-pay-button">Pay with M-Pesa</button>
-</div>
-     <p class="notice">Complete your payment using the selected payment method. Tickets are subject to payment confirmation.</p>
+        <select id="paymentChoice">
+          <option>M-Pesa Till</option>
+          <option>PayPal</option>
+          <option>Visa / Mastercard</option>
+        </select>
+      </label>
+      <div id="paypal-button-container" hidden></div>
+      <div id="mpesa-payment-container" hidden>
+        <button type="button" id="mpesa-pay-button">Pay with M-Pesa</button>
+      </div>
+      <p class="notice">Complete your payment using the selected payment method. Tickets are subject to payment confirmation.</p>
     </form>
   </dialog>
+
   <div id="toast" role="status" aria-live="polite"></div>
   <script src="app.js"></script>
 </body>
