@@ -236,7 +236,47 @@ async function renderPayPalButtons() {
     showToast(error.message || "Unable to load PayPal. Please try again.");
   }
 }
+document.getElementById("mpesa-pay-button").addEventListener("click", async () => {
+  const buyer = getBuyerDetails();
 
+  if (!buyer) return;
+
+  const tickets = selectedTickets();
+
+  if (!tickets.length) {
+    showToast("Please select at least one ticket.");
+    return;
+  }
+
+  const button = document.getElementById("mpesa-pay-button");
+  button.disabled = true;
+  button.textContent = "Sending payment request...";
+
+  try {
+    const response = await fetch("/api/mpesa/stk-push", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        phoneNumber: buyer.phone,
+        tickets,
+        buyer
+      })
+    });
+
+    const result = await response.json();
+
+    if (!response.ok || result.ResponseCode !== "0") {
+      throw new Error(result.error || result.errorMessage || "M-Pesa request failed.");
+    }
+
+    showToast("M-Pesa prompt sent. Enter your PIN on your phone to pay.");
+    button.textContent = "Payment request sent";
+  } catch (error) {
+    showToast(error.message || "M-Pesa payment failed. Please try again.");
+    button.disabled = false;
+    button.textContent = "Pay with M-Pesa";
+  }
+});
 paymentChoice.addEventListener("change", () => {
   paypalContainer.hidden = true;
   paypalContainer.innerHTML = "";
