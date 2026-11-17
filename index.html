@@ -135,7 +135,9 @@
       <label>Phone number<input id="buyerPhone" type="tel" autocomplete="tel" placeholder="07xx xxx xxx" required></label>
       <label>Preferred payment method
         <select id="paymentChoice"><option>M-Pesa Till</option><option>M-Pesa Paybill</option><option>PayPal</option><option>Visa / Mastercard</option></select>
-      </label><div id="paypal-button-container" hidden></div>
+      </label><div id="paypal-button-container" hidden></div><div id="mpesa-payment-container" hidden>
+  <button type="button" id="mpesa-pay-button">Pay with M-Pesa</button>
+</div>
      <p class="notice">Complete your payment using the selected payment method. Tickets are subject to payment confirmation.</p>
     </form>
   </dialog>
