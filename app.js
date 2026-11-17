@@ -9,9 +9,10 @@ const countEl = document.getElementById("ticketCount");
 const checkoutBtn = document.getElementById("checkoutBtn");
 const dialog = document.getElementById("checkoutDialog");
 const toast = document.getElementById("toast");
-
 const paymentChoice = document.getElementById("paymentChoice");
 const paypalContainer = document.getElementById("paypal-button-container");
+const mpesaContainer = document.getElementById("mpesa-payment-container");
+const mpesaButton = document.getElementById("mpesa-pay-button");
 
 let paypalSdkPromise = null;
 let paypalRendered = false;
@@ -34,7 +35,11 @@ function update() {
 
   document.querySelectorAll(".ticket-row").forEach(row => {
     const type = row.dataset.type;
-    row.querySelector("output").textContent = quantities[type];
+    const output = row.querySelector("output");
+
+    if (!prices[type] || !output) return;
+
+    output.textContent = quantities[type];
     total += quantities[type] * prices[type];
     count += quantities[type];
   });
@@ -46,7 +51,11 @@ function update() {
 
 document.querySelectorAll(".ticket-row").forEach(row => {
   const type = row.dataset.type;
-  const [minus, plus] = row.querySelectorAll("button");
+  const buttons = row.querySelectorAll("button");
+
+  if (!prices[type] || buttons.length < 2) return;
+
+  const [minus, plus] = buttons;
 
   minus.addEventListener("click", () => {
     quantities[type] = Math.max(0, quantities[type] - 1);
@@ -58,6 +67,22 @@ document.querySelectorAll(".ticket-row").forEach(row => {
     update();
   });
 });
+
+function updatePaymentDisplay() {
+  paypalContainer.hidden = true;
+  paypalContainer.innerHTML = "";
+  paypalRendered = false;
+
+  mpesaContainer.hidden = true;
+
+  if (paymentChoice.value === "PayPal") {
+    renderPayPalButtons();
+  } else if (paymentChoice.value === "M-Pesa Till") {
+    mpesaContainer.hidden = false;
+  } else {
+    showToast("This payment method is not connected yet.");
+  }
+}
 
 checkoutBtn.addEventListener("click", () => {
   const tickets = selectedTickets();
@@ -76,6 +101,7 @@ checkoutBtn.addEventListener("click", () => {
     `<hr><strong>Total: ${money(total)}</strong>`;
 
   dialog.showModal();
+  updatePaymentDisplay();
 });
 
 function getBuyerDetails() {
@@ -119,16 +145,14 @@ async function loadPayPal() {
       encodeURIComponent(config.clientId) +
       "&currency=USD&intent=capture";
 
-    script.onload = () => {};
-    script.onerror = () => {
-      paypalSdkPromise = null;
-    };
-
     document.head.appendChild(script);
 
     await new Promise((resolve, reject) => {
       script.onload = resolve;
-      script.onerror = () => reject(new Error("PayPal could not load."));
+      script.onerror = () => {
+        paypalSdkPromise = null;
+        reject(new Error("PayPal could not load."));
+      };
     });
 
     return window.paypal;
@@ -140,9 +164,7 @@ async function loadPayPal() {
 async function renderPayPalButtons() {
   if (paypalRendered) return;
 
-  const tickets = selectedTickets();
-
-  if (!tickets.length) {
+  if (!selectedTickets().length) {
     showToast("Please select at least one ticket.");
     return;
   }
@@ -152,7 +174,6 @@ async function renderPayPalButtons() {
 
   try {
     const paypal = await loadPayPal();
-
     paypalContainer.innerHTML = "";
 
     paypal.Buttons({
@@ -189,26 +210,27 @@ async function renderPayPalButtons() {
 
         showToast("Payment approved. Confirming your payment...");
 
-       const response = await fetch("/api/paypal/capture-order", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    orderID: data.orderID,
-    buyer,
-    tickets: currentTickets
-  })
-});
+        const response = await fetch("/api/paypal/capture-order", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            orderID: data.orderID,
+            buyer,
+            tickets: currentTickets
+          })
+        });
+
         const result = await response.json();
 
         if (!response.ok || !result.success || result.status !== "COMPLETED") {
-          throw new Error(result.error || "Payment confirmation failed. Please contact support before trying again.");
+          throw new Error(result.error || "Payment confirmation failed. Contact support.");
         }
 
-        if (result.emailSent) {
-          showToast("Payment confirmed! Your booking details have been sent to the festival team.");
-        } else {
-          showToast("Payment confirmed, but the email notification failed. Please contact the festival team.");
-        }
+        showToast(
+          result.emailSent
+            ? "Payment confirmed! Booking details sent to the festival team."
+            : "Payment confirmed, but email notification failed. Contact the festival team."
+        );
 
         paypalContainer.innerHTML =
           `<p><strong>Payment successful!</strong></p>
@@ -216,8 +238,28 @@ async function renderPayPalButtons() {
            <p>Please keep this reference for your records.</p>`;
 
         paypalRendered = true;
-  
-document.getElementById("mpesa-pay-button").addEventListener("click", async () => {
+      },
+
+      onCancel: () => {
+        showToast("Payment was cancelled. No payment was completed.");
+      },
+
+      onError: error => {
+        console.error("PayPal error:", error);
+        showToast(error.message || "PayPal checkout encountered an error.");
+      }
+    }).render("#paypal-button-container");
+
+    paypalRendered = true;
+
+  } catch (error) {
+    console.error(error);
+    paypalContainer.innerHTML = "";
+    showToast(error.message || "Unable to load PayPal.");
+  }
+}
+
+mpesaButton.addEventListener("click", async () => {
   const buyer = getBuyerDetails();
   if (!buyer) return;
 
@@ -228,9 +270,8 @@ document.getElementById("mpesa-pay-button").addEventListener("click", async () =
     return;
   }
 
-  const button = document.getElementById("mpesa-pay-button");
-  button.disabled = true;
-  button.textContent = "Sending payment request...";
+  mpesaButton.disabled = true;
+  mpesaButton.textContent = "Sending payment request...";
 
   try {
     const response = await fetch("/api/mpesa/stk-push", {
@@ -253,45 +294,15 @@ document.getElementById("mpesa-pay-button").addEventListener("click", async () =
     }
 
     showToast("M-Pesa prompt sent. Enter your PIN on your phone to pay.");
-    button.textContent = "Payment request sent";
+    mpesaButton.textContent = "Payment request sent";
 
   } catch (error) {
     showToast(error.message || "M-Pesa payment failed. Please try again.");
-    button.disabled = false;
-    button.textContent = "Pay with M-Pesa";
+    mpesaButton.disabled = false;
+    mpesaButton.textContent = "Pay with M-Pesa";
   }
 });
-
-
-    const result = await response.json();
-
-  if (!response.ok || !result.success) {
-      throw new Error(result.error || result.errorMessage || "M-Pesa request failed.");
-    }
-
-    showToast("M-Pesa prompt sent. Enter your PIN on your phone to pay.");
-    button.textContent = "Payment request sent";
-  } catch (error) {
-    showToast(error.message || "M-Pesa payment failed. Please try again.");
-    button.disabled = false;
-    button.textContent = "Pay with M-Pesa";
-  }
-});
-function updatePaymentDisplay() {
-  paypalContainer.hidden = true;
-  paypalContainer.innerHTML = "";
-  paypalRendered = false;
-
-  const mpesaContainer = document.getElementById("mpesa-payment-container");
-
-  mpesaContainer.hidden = paymentChoice.value !== "M-Pesa Till";
-
-  if (paymentChoice.value === "PayPal") {
-    renderPayPalButtons();
-  } else if (paymentChoice.value !== "M-Pesa Till") {
-    showToast("This payment method is not connected yet.");
-  }
-}
 
 paymentChoice.addEventListener("change", updatePaymentDisplay);
+
 update();
