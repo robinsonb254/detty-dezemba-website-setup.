@@ -242,21 +242,16 @@ paymentChoice.addEventListener("change", () => {
   paypalContainer.innerHTML = "";
   paypalRendered = false;
 
+  const mpesaContainer = document.getElementById("mpesa-payment-container");
+
+  mpesaContainer.hidden = true;
+
   if (paymentChoice.value === "PayPal") {
     renderPayPalButtons();
   } else if (paymentChoice.value === "M-Pesa Till") {
-    showToast("M-Pesa Till selected.");
+    mpesaContainer.hidden = false;
   } else {
     showToast("This payment method is not connected yet.");
   }
-});("menuToggle").addEventListener("click", () => {
-  document.getElementById("nav").classList.toggle("open");
 });
-
-document.querySelectorAll("#nav a").forEach(link => {
-  link.addEventListener("click", () => {
-    document.getElementById("nav").classList.remove("open");
-  });
-});
-
 update();
