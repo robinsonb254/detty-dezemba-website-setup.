@@ -244,12 +244,12 @@ paymentChoice.addEventListener("change", () => {
 
   if (paymentChoice.value === "PayPal") {
     renderPayPalButtons();
+  } else if (paymentChoice.value === "M-Pesa Till") {
+    showToast("M-Pesa Till selected.");
   } else {
-    showToast("This payment method is not connected yet. Please choose PayPal.");
+    showToast("This payment method is not connected yet.");
   }
-});
-
-document.getElementById("menuToggle").addEventListener("click", () => {
+});("menuToggle").addEventListener("click", () => {
   document.getElementById("nav").classList.toggle("open");
 });
 
