@@ -34,7 +34,6 @@ export default async function handler(req, res) {
     }
 
     const phone = String(phoneNumber).replace(/\D/g, "");
-
     const normalizedPhone =
       phone.startsWith("0") ? "254" + phone.slice(1) :
       phone.startsWith("254") ? phone :
@@ -46,13 +45,20 @@ export default async function handler(req, res) {
       });
     }
 
-    const validCategories = ["Regular", "VIP", "VVIP"];
+    const prices = {
+      Regular: 1000,
+      VIP: 5000,
+      VVIP: 10000
+    };
+
+    let amount = 0;
 
     for (const ticket of tickets) {
+      const price = prices[ticket.category];
       const quantity = Number(ticket.quantity);
 
       if (
-        !validCategories.includes(ticket.category) ||
+        !price ||
         !Number.isInteger(quantity) ||
         quantity < 1 ||
         quantity > 20
@@ -61,10 +67,15 @@ export default async function handler(req, res) {
           error: "Invalid ticket selection."
         });
       }
+
+      amount += price * quantity;
     }
 
-    // TEMPORARY LIVE TEST AMOUNT
-    const amount = 50;
+    if (!Number.isInteger(amount) || amount < 1) {
+      return res.status(400).json({
+        error: "Invalid payment amount."
+      });
+    }
 
     const auth = Buffer.from(
       `${MPESA_CONSUMER_KEY}:${MPESA_CONSUMER_SECRET}`
@@ -117,8 +128,8 @@ export default async function handler(req, res) {
           PhoneNumber: normalizedPhone,
           CallBackURL:
             "https://detty-dezemba-website-setup.vercel.app/api/mpesa/callback",
-          AccountReference: "DETTYTEST",
-          TransactionDesc: "KSh 50 payment test"
+          AccountReference: "DETTYDEZEMBA",
+          TransactionDesc: "Festival ticket payment"
         })
       }
     );
@@ -135,7 +146,7 @@ export default async function handler(req, res) {
 
     return res.status(200).json({
       success: true,
-      message: "KSh 50 test payment prompt sent. Check your phone.",
+      message: "Payment prompt sent. Check your phone and enter your M-Pesa PIN.",
       checkoutRequestID: result.CheckoutRequestID,
       merchantRequestID: result.MerchantRequestID
     });
