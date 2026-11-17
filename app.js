@@ -76,7 +76,7 @@ checkoutBtn.addEventListener("click", () => {
     `<hr><strong>Total: ${money(total)}</strong>`;
 
   dialog.showModal();
-});
+});updatePaymentDisplay();
 
 function getBuyerDetails() {
   const name = document.getElementById("buyerName").value.trim();
@@ -276,20 +276,20 @@ document.getElementById("mpesa-pay-button").addEventListener("click", async () =
     button.textContent = "Pay with M-Pesa";
   }
 });
-paymentChoice.addEventListener("change", () => {
+function updatePaymentDisplay() {
   paypalContainer.hidden = true;
   paypalContainer.innerHTML = "";
   paypalRendered = false;
 
   const mpesaContainer = document.getElementById("mpesa-payment-container");
 
-  mpesaContainer.hidden = true;
+  mpesaContainer.hidden = paymentChoice.value !== "M-Pesa Till";
 
   if (paymentChoice.value === "PayPal") {
     renderPayPalButtons();
-  } else if (paymentChoice.value === "M-Pesa Till") {
-    mpesaContainer.hidden = false;
-  
+  } else if (paymentChoice.value !== "M-Pesa Till") {
+    showToast("This payment method is not connected yet.");
   }
-});
-update();
+}
+
+paymentChoice.addEventListener("change", updatePaymentDisplay);
