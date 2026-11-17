@@ -283,14 +283,13 @@ paymentChoice.addEventListener("change", () => {
 
   const mpesaContainer = document.getElementById("mpesa-payment-container");
 
-  mpesaContainer.hidden = false;
+  mpesaContainer.hidden = true;
 
   if (paymentChoice.value === "PayPal") {
     renderPayPalButtons();
   } else if (paymentChoice.value === "M-Pesa Till") {
     mpesaContainer.hidden = false;
-  } else {
-    showToast("This payment method is not connected yet.");
+  
   }
 });
 update();
