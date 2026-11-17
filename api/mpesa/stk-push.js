@@ -94,10 +94,16 @@ export default async function handler(req, res) {
       throw new Error("Could not authenticate with Safaricom.");
     }
 
-    const timestamp = new Date()
-      .toISOString()
-      .replace(/[-:TZ.]/g, "")
-      .slice(0, 14);
+  const timestamp = new Intl.DateTimeFormat("en-GB", {
+  timeZone: "Africa/Nairobi",
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+  hour: "2-digit",
+  minute: "2-digit",
+  second: "2-digit",
+  hourCycle: "h23"
+}).format(new Date()).replace(/\D/g, "");
 
     const password = Buffer.from(
       MPESA_SHORTCODE + MPESA_PASSKEY + timestamp
