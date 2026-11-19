@@ -140,3 +140,67 @@ footer{background:linear-gradient(180deg,#0c0712,#050309);border-top:1px solid #
 .payment-method.upcoming-payment .cards{color:#f5d27a}
 .payment-method.upcoming-payment span{color:#e4d8eb;font-weight:800}
 @media(max-width:600px){.payment-heading{gap:8px}.payment-method.primary-payment{padding:17px 12px}}
+
+
+/* Final quality pass: premium hero, mobile usability and clear booking journey */
+.hero{
+  min-height: min(760px, calc(100svh - 76px));
+  grid-template-columns:minmax(0,1.04fr) minmax(300px,.96fr);
+  gap:clamp(24px,4vw,64px);
+  padding:clamp(48px,7vw,92px) clamp(24px,7vw,110px);
+  background:
+    radial-gradient(ellipse at 76% 38%,#bd79df55 0,transparent 34%),
+    radial-gradient(ellipse at 68% 82%,#d9a84b24 0,transparent 32%),
+    linear-gradient(115deg,#090610 0%,#1a0c27 54%,#301044 100%);
+}
+.hero-copy{max-width:690px}
+.hero .eyebrow{font-size:clamp(10px,1vw,13px);letter-spacing:2.4px}
+.hero h1{font-size:clamp(58px,8.2vw,116px);line-height:.82;letter-spacing:-.055em}
+.hero-sub{font-size:clamp(15px,1.7vw,22px);letter-spacing:.28em}
+.hero-art{height:clamp(330px,42vw,570px);isolation:isolate}
+.hero-art:before{
+  content:"";position:absolute;width:min(88%,520px);aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle,#a64edc48 0%,#71329a22 48%,transparent 72%);
+  filter:blur(10px);z-index:-1
+}
+.hero-art img{max-width:100%;object-fit:contain;filter:drop-shadow(0 24px 48px #000c) drop-shadow(0 0 24px #d7a6ff28)}
+.hero-stamp{box-shadow:0 12px 35px #0008;border-color:#f5d27a;background:#100817ed}
+.venue-directions{
+  display:inline-flex;align-items:center;gap:10px;margin-top:18px;padding:12px 16px;
+  border:1px solid #b68a4a;border-radius:8px;color:#ffe8ad;font-size:12px;
+  font-weight:900;letter-spacing:1px;transition:background .2s,color .2s
+}
+.venue-directions:hover{background:#f5d27a;color:#160d20}
+.booking-guidance{color:#d8ccdf;line-height:1.6;margin:-28px 0 22px;font-size:14px}
+.ticket-row .qty button:focus-visible,.cta:focus-visible,.topbar a:focus-visible,
+.menu-toggle:focus-visible,.venue-directions:focus-visible,.secondary-cta:focus-visible{
+  outline:3px solid #fff0b7;outline-offset:3px
+}
+.ticket-row .qty output{min-width:1.5em;text-align:center;font-variant-numeric:tabular-nums}
+.total-line{position:sticky;bottom:8px;z-index:2;background:#120b19f2;padding:14px 16px;border:1px solid #b68a4a;border-radius:12px;backdrop-filter:blur(12px)}
+#checkoutBtn{width:100%;min-height:54px}
+#checkoutDialog{max-width:min(560px,calc(100vw - 28px));max-height:calc(100svh - 28px);overflow:auto}
+#checkoutDialog .dialog-inner{padding:clamp(20px,5vw,32px)}
+#checkoutDialog input,#checkoutDialog select{min-height:46px}
+@media(max-width:850px){
+  .hero{min-height:auto;grid-template-columns:1fr  .8fr;padding:56px 5%}
+  .hero-art{height:390px}
+}
+@media(max-width:600px){
+  .hero{grid-template-columns:1fr;gap:18px;padding:38px 6% 34px;text-align:center}
+  .hero-copy{margin:auto;width:100%}
+  .hero h1{font-size:clamp(54px,14vw,78px);letter-spacing:-.045em}
+  .hero-art{height:clamp(245px,72vw,350px);grid-row:2;margin-top:0}
+  .hero-art img{max-width:86%}
+  .hero-stamp{right:3%;top:12px;padding:10px;font-size:12px}
+  .hero-stamp strong{font-size:21px}
+  .hero-meta{align-items:center}
+  .booking-guidance{margin:-30px 0 18px;font-size:13px}
+  .venue-directions{display:flex;width:max-content;max-width:100%;margin:18px auto 0;text-align:center;justify-content:center}
+  .total-line{bottom:6px}
+  #checkoutDialog{padding:0}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
