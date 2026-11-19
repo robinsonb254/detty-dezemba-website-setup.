@@ -2,7 +2,9 @@
 const pricesInCents = {
   Regular: 770,
   VIP: 3848,
-  VVIP: 7695
+  VVIP: 7695,
+  "VIP Special": 30780,
+  "VVIP Special": 38475
 };
 
 export default async function handler(req, res) {
@@ -26,7 +28,7 @@ export default async function handler(req, res) {
 
     const tickets = req.body?.tickets;
 
-    if (!Array.isArray(tickets) || tickets.length < 1 || tickets.length > 3) {
+    if (!Array.isArray(tickets) || tickets.length < 1 || tickets.length > 5) {
       return res.status(400).json({ error: "Invalid ticket selection" });
     }
 
