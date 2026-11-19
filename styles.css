@@ -129,3 +129,14 @@ footer{background:linear-gradient(180deg,#0c0712,#050309);border-top:1px solid #
 .video-caption p{font-size:12px;line-height:1.55;color:#d2c6d9;margin:0}
 @media(max-width:900px){.video-grid{grid-template-columns:1fr 1fr}.video-card:last-child{grid-column:1/-1;max-width:calc(50% - 10px);justify-self:center}}
 @media(max-width:600px){.video-grid{grid-template-columns:1fr;gap:16px}.video-card:last-child{grid-column:auto;max-width:none}.video-caption{padding:15px}}
+
+
+/* Clear payment method priority */
+.payment-heading{width:100%;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.payment-method.primary-payment{border:1px solid #15965a;background:linear-gradient(115deg,#f5fff8,#fff);padding:20px 16px;box-shadow:0 7px 22px #0002}
+.payment-method.primary-payment .mpesa,.payment-method.primary-payment .paypal{font-size:25px}
+.payment-status{display:inline-block;padding:5px 9px;border-radius:20px;background:#e0f7e9;color:#08743c;font-size:10px;font-weight:900;letter-spacing:.8px}
+.payment-method.upcoming-payment{border:1px dashed #b68a4a;background:#21172a;color:#fff;padding:15px}
+.payment-method.upcoming-payment .cards{color:#f5d27a}
+.payment-method.upcoming-payment span{color:#e4d8eb;font-weight:800}
+@media(max-width:600px){.payment-heading{gap:8px}.payment-method.primary-payment{padding:17px 12px}}
