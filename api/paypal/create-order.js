@@ -1,9 +1,9 @@
 
 const pricesInCents = {
   Regular: 770,
-  VIP: 3848,
-  VVIP: 7695,
-  "VIP Special": 30780,
+  VIP: 15390,
+  VVIP: 30780,
+  "VIP Special": 34628,
   "VVIP Special": 38475
 };
 
