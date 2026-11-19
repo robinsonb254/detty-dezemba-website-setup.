@@ -1,6 +1,6 @@
 
-const prices = { Regular: 1000, VIP: 5000, VVIP: 10000 };
-const quantities = { Regular: 0, VIP: 0, VVIP: 0 };
+const prices = { Regular: 1000, VIP: 5000, VVIP: 10000, "VIP Special": 40000, "VVIP Special": 50000 };
+const quantities = { Regular: 0, VIP: 0, VVIP: 0, "VIP Special": 0, "VVIP Special": 0 };
 
 const money = n => "KSh " + n.toLocaleString("en-KE");
 
