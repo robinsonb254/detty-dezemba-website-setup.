@@ -2,3 +2,16 @@
 
 .official-warning{display:flex;flex-direction:column;gap:6px;padding:15px 7%;background:#3a170d;border-bottom:2px solid #ffca28;color:#fff;text-align:center;line-height:1.5;font-size:13px}.official-warning strong{color:#ffca28;letter-spacing:.8px}.official-warning a{color:#ffdf72;text-decoration:underline;font-weight:900}footer a:not(.brand){color:#ffdf72;text-decoration:underline}.terms-page{max-width:1000px;margin:0 auto;padding:55px 7%;line-height:1.75;color:var(--muted)}.terms-page h1,.terms-page h2{color:#fff}.terms-page h1 em{color:var(--gold);font-style:normal}.terms-page h2{font-size:21px;margin:30px 0 8px}.terms-page a{color:#ffdf72;text-decoration:underline}.terms-alert{padding:16px;background:#3a170d;border-left:4px solid var(--gold);color:#fff;border-radius:8px}.terms-page li{margin:7px 0}
 @media(max-width:600px){.official-warning{padding:13px 5%;font-size:12px}}
+
+
+/* Premium ticket package presentation */
+.special-ticket{border:2px solid #d9a6ff;background:linear-gradient(100deg,#fff,#f4eaff)}
+.special-ticket .ticket-info p{line-height:1.45}
+.special-benefits{margin:18px 0;padding:22px;border:1px solid #7836ac;border-radius:12px;background:linear-gradient(120deg,#1b0c2b,#26103d);color:#fff}
+.special-benefits h3{text-align:center;color:var(--gold);font-size:22px;margin:0 0 18px}
+.benefit-columns{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.benefit-columns>div{padding:16px;border-radius:10px;background:#100719;border:1px solid #603080}
+.benefit-columns h4{color:var(--gold);margin:0 0 9px}
+.benefit-columns p,.benefit-columns li{color:#e3d9ec;font-size:13px;line-height:1.55}
+.benefit-columns ul{padding-left:19px}
+@media(max-width:600px){.benefit-columns{grid-template-columns:1fr}.special-benefits{padding:15px}}
