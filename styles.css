@@ -114,3 +114,18 @@ footer{background:linear-gradient(180deg,#0c0712,#050309);border-top:1px solid #
  .photo-grid .photo-feature,.photo-grid .photo-feature img{height:320px}
  .hero:before{inset:10px}
 }
+
+
+/* Premium embedded artist video experience */
+.video-experience{max-width:1450px}
+.video-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.video-card{overflow:hidden;border:1px solid #b68a4a90;border-radius:16px;background:linear-gradient(145deg,#1c1027,#09060f);box-shadow:0 18px 45px #0008;transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}
+.video-card:hover{transform:translateY(-5px);border-color:#f5d27a;box-shadow:0 24px 55px #000a}
+.video-frame{position:relative;aspect-ratio:16/9;background:#050309}
+.video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.video-caption{padding:18px 19px 20px}
+.video-caption span{color:#f5d27a;font-size:10px;font-weight:900;letter-spacing:1.8px}
+.video-caption h3{font-size:19px;margin:8px 0;color:#fff}
+.video-caption p{font-size:12px;line-height:1.55;color:#d2c6d9;margin:0}
+@media(max-width:900px){.video-grid{grid-template-columns:1fr 1fr}.video-card:last-child{grid-column:1/-1;max-width:calc(50% - 10px);justify-self:center}}
+@media(max-width:600px){.video-grid{grid-template-columns:1fr;gap:16px}.video-card:last-child{grid-column:auto;max-width:none}.video-caption{padding:15px}}
