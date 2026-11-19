@@ -4,6 +4,33 @@ const quantities = { Regular: 0, VIP: 0, VVIP: 0, "VIP Special": 0, "VVIP Specia
 
 const money = n => "KSh " + n.toLocaleString("en-KE");
 
+function updateFestivalCountdown() {
+  const target = new Date("2026-12-12T00:00:00+03:00").getTime();
+  const now = Date.now();
+  const remaining = target - now;
+  const countdown = document.getElementById("festivalCountdown");
+
+  if (!countdown) return;
+
+  if (remaining <= 0) {
+    countdown.innerHTML = '<p class="countdown-live">FESTIVAL DAY IS HERE!</p>';
+    return;
+  }
+
+  const days = Math.floor(remaining / 86400000);
+  const hours = Math.floor((remaining % 86400000) / 3600000);
+  const minutes = Math.floor((remaining % 3600000) / 60000);
+  const seconds = Math.floor((remaining % 60000) / 1000);
+
+  document.getElementById("countDays").textContent = days;
+  document.getElementById("countHours").textContent = String(hours).padStart(2, "0");
+  document.getElementById("countMinutes").textContent = String(minutes).padStart(2, "0");
+  document.getElementById("countSeconds").textContent = String(seconds).padStart(2, "0");
+}
+
+updateFestivalCountdown();
+setInterval(updateFestivalCountdown, 1000);
+
 const totalEl = document.getElementById("total");
 const countEl = document.getElementById("ticketCount");
 const checkoutBtn = document.getElementById("checkoutBtn");
