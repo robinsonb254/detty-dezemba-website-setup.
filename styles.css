@@ -15,3 +15,7 @@
 .benefit-columns p,.benefit-columns li{color:#e3d9ec;font-size:13px;line-height:1.55}
 .benefit-columns ul{padding-left:19px}
 @media(max-width:600px){.benefit-columns{grid-template-columns:1fr}.special-benefits{padding:15px}}
+
+
+/* Festival countdown */
+.countdown-panel{display:inline-block;margin:2px 0 22px;padding:14px 18px;border:1px solid #9a55cf;border-radius:12px;background:#090511aa;box-shadow:0 10px 30px #0005}.countdown-panel>p{margin:0 0 10px;color:var(--gold);font-size:11px;font-weight:900;letter-spacing:2px}.countdown{display:flex;gap:10px}.countdown>div{min-width:62px;display:flex;flex-direction:column;align-items:center;gap:3px}.countdown strong{font-size:clamp(22px,3vw,30px);font-variant-numeric:tabular-nums;color:#fff}.countdown span{font-size:9px;font-weight:900;letter-spacing:1px;color:#c9bfd5}.countdown-live{margin:0;color:var(--gold);font-size:19px;font-weight:1000;letter-spacing:1px}@media(max-width:850px){.countdown-panel{margin-left:auto;margin-right:auto}}@media(max-width:480px){.countdown{gap:5px}.countdown>div{min-width:55px}.countdown strong{font-size:23px}}
