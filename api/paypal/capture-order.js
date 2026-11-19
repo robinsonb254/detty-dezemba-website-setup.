@@ -91,9 +91,9 @@ export default async function handler(req, res) {
     ) {
       const allowedPrices = {
         Regular: 7.70,
-        VIP: 38.48,
-        VVIP: 76.95,
-        "VIP Special": 307.80,
+        VIP: 153.90,
+        VVIP: 307.80,
+        "VIP Special": 346.28,
         "VVIP Special": 384.75
       };
 
