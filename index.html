@@ -76,6 +76,7 @@
         <div><small>DATE</small><strong>12 DEC</strong><span>2026 • SATURDAY</span></div>
         <div><small>VENUE</small><strong>LAUREATE</strong><span>GARDENS, NAIROBI</span></div>
       </div>
+      <a class="venue-directions" href="https://www.google.com/maps/search/?api=1&amp;query=Laureate+Gardens+Nairobi" target="_blank" rel="noopener noreferrer">GET DIRECTIONS TO LAUREATE GARDENS <span aria-hidden="true">↗</span></a>
     </section>
 
     <section class="lineup section" id="lineup">
@@ -142,7 +143,8 @@
 
     <section class="tickets section" id="tickets">
       <div class="section-heading"><p class="eyebrow">SECURE YOUR PLACE</p><h2>Choose your <em>ticket</em></h2><p>Select quantities and continue to checkout. Special packages offer an elevated festival experience.</p></div>
-      <p class="booking-guidance">Choose your ticket type, adjust the quantity, then review your order at checkout.</p>\n      <div class="ticket-layout">
+      <p class="booking-guidance">Choose your ticket type, adjust the quantity, then review your order at checkout.</p>
+      <div class="ticket-layout">
         <div class="ticket-list">
           <article class="ticket-row" data-type="Regular" data-price="1000">
             <div class="ticket-icon">★</div><div class="ticket-info"><h3>REGULAR</h3><p>General access</p></div>
@@ -231,16 +233,16 @@
   <dialog id="checkoutDialog">
     <form method="dialog" class="dialog-inner">
       <button class="close" aria-label="Close">×</button>
-      <p class="eyebrow">TICKET CHECKOUT</p><h2>Your order</h2>
-      <div id="orderSummary"></div>
+      <p class="eyebrow">TICKET CHECKOUT · ORDER REVIEW</p><h2>Your order</h2>
+      <div id="orderSummary" aria-live="polite"></div>
       <label>Full name<input id="buyerName" autocomplete="name" placeholder="Your full name" required></label>
       <label>Email address<input id="buyerEmail" type="email" autocomplete="email" placeholder="you@example.com" required></label>
       <label>Phone number<input id="buyerPhone" type="tel" autocomplete="tel" placeholder="07xx xxx xxx" required></label>
       <label>Preferred payment method
         <select id="paymentChoice">
           <option>M-Pesa Till</option>
-          <option>PayPal</option>
           <option>Visa / Mastercard</option>
+          <option>PayPal</option>
         </select>
       </label>
       <div id="paypal-button-container" hidden></div>
