@@ -204,3 +204,11 @@ footer{background:linear-gradient(180deg,#0c0712,#050309);border-top:1px solid #
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
+
+
+/* Sold-out early ticket tiers */
+.sold-out-ticket{grid-template-columns:48px minmax(0,1fr) auto auto;background:linear-gradient(105deg,#f4edf8,#e9e0ef);border:1px solid #b68a4a;opacity:.88}
+.sold-out-ticket .ticket-info h3{color:#392448}
+.sold-out-ticket>strong{color:#5b4b61;text-decoration:line-through;text-decoration-thickness:1px}
+.sold-out-label{display:inline-flex;align-items:center;justify-content:center;padding:7px 10px;border-radius:6px;background:#4a3158;color:#fff;font-size:10px;font-weight:1000;letter-spacing:1px;white-space:nowrap}
+@media(max-width:600px){.sold-out-ticket{grid-template-columns:38px minmax(0,1fr)}.sold-out-ticket>strong{grid-column:2;grid-row:2;font-size:15px}.sold-out-label{grid-column:2;grid-row:3;justify-self:start}}
