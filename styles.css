@@ -19,3 +19,47 @@
 
 /* Festival countdown */
 .countdown-panel{display:inline-block;margin:2px 0 22px;padding:14px 18px;border:1px solid #9a55cf;border-radius:12px;background:#090511aa;box-shadow:0 10px 30px #0005}.countdown-panel>p{margin:0 0 10px;color:var(--gold);font-size:11px;font-weight:900;letter-spacing:2px}.countdown{display:flex;gap:10px}.countdown>div{min-width:62px;display:flex;flex-direction:column;align-items:center;gap:3px}.countdown strong{font-size:clamp(22px,3vw,30px);font-variant-numeric:tabular-nums;color:#fff}.countdown span{font-size:9px;font-weight:900;letter-spacing:1px;color:#c9bfd5}.countdown-live{margin:0;color:var(--gold);font-size:19px;font-weight:1000;letter-spacing:1px}@media(max-width:850px){.countdown-panel{margin-left:auto;margin-right:auto}}@media(max-width:480px){.countdown{gap:5px}.countdown>div{min-width:55px}.countdown strong{font-size:23px}}
+
+
+/* Homepage, ticket and mobile refinements */
+.secondary-cta{display:inline-flex;align-items:center;justify-content:center;margin:12px 0 0 10px;padding:15px 18px;border:1px solid #d8b7f3;border-radius:8px;color:#fff;font-size:12px;font-weight:900;letter-spacing:.7px;transition:background .2s ease,color .2s ease}
+.secondary-cta:hover{background:#fff;color:#190d25}
+.hero-copy .cta{margin-top:2px}
+.ticket-list{box-shadow:0 16px 45px #0003}
+.ticket-row{transition:transform .18s ease,box-shadow .18s ease}
+.ticket-row:hover{transform:translateY(-2px);box-shadow:0 8px 22px #0002}
+.special-ticket{border:2px solid #b879e8;box-shadow:inset 4px 0 0 #7c22d8}
+.special-ticket:last-of-type{border-color:#e3a53e;box-shadow:inset 4px 0 0 #f28a17}
+.special-ticket .ticket-info h3{letter-spacing:.4px}
+.ticket-row .qty button{min-width:36px;min-height:36px;font-weight:700}
+html{scroll-padding-top:88px}
+@media(max-width:850px){
+ .hero{gap:12px}
+ .hero-copy .cta,.hero-copy .secondary-cta{margin:8px 5px 0}
+ .ticket-list,.payment-card{padding:14px}
+}
+@media(max-width:600px){
+ .topbar{padding:0 4%;height:68px}
+ .topbar nav{top:68px}
+ .menu-toggle{padding:10px;min-width:44px;min-height:44px}
+ .account-link{white-space:nowrap}
+ .hero{padding:34px 5% 42px}
+ .hero h1{font-size:clamp(48px,13vw,68px);line-height:.88}
+ .hero-meta{font-size:11px;gap:9px;flex-direction:column;align-items:center}
+ .hero-copy .cta,.hero-copy .secondary-cta{width:min(100%,320px);margin:8px auto 0}
+ .countdown-panel{max-width:100%;padding:12px 10px}
+ .countdown{justify-content:center}
+ .ticket-row{grid-template-columns:38px minmax(0,1fr);gap:9px}
+ .ticket-row>strong{grid-column:2;grid-row:2;font-size:15px}
+ .ticket-row .qty{grid-column:2;grid-row:3;justify-content:flex-start}
+ .ticket-info{min-width:0}
+ .ticket-info p{overflow-wrap:anywhere}
+ .qty{gap:14px}
+ .qty button{min-width:40px;min-height:40px}
+ .total-line{align-items:center;gap:12px}
+ .total-line strong{font-size:19px}
+ .special-benefits{margin-left:0;margin-right:0}
+ .benefit-columns>div{padding:13px}
+ .payment-card{margin-top:4px}
+ footer{padding:34px 5%;overflow-wrap:anywhere}
+}
