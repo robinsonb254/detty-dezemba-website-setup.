@@ -47,9 +47,9 @@ export default async function handler(req, res) {
 
     const prices = {
       Regular: 1000,
-      VIP: 5000,
-      VVIP: 10000,
-      "VIP Special": 40000,
+      VIP: 20000,
+      VVIP: 40000,
+      "VIP Special": 45000,
       "VVIP Special": 50000
     };
 
