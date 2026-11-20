@@ -46,11 +46,15 @@ export default async function handler(req, res) {
     }
 
     const prices = {
-      Regular: 1000,
-      VIP: 20000,
-      VVIP: 40000,
-      "VIP Special": 45000,
-      "VVIP Special": 50000
+      "General Access": 5000,
+      "Duo Ticket": 9000,
+      "Priority Access IV (VIP)": 20000,
+      "One Dance VVIP": 30000,
+      "Premium Access for Two": 37999,
+      "Kese Table": 200000,
+      "Joro Table": 500000,
+      "Soco Table": 1000000,
+      "Star Boy Table": 2000000
     };
 
     let amount = 0;
