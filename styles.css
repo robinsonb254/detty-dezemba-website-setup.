@@ -218,3 +218,9 @@ footer{background:linear-gradient(180deg,#0c0712,#050309);border-top:1px solid #
 .official-warning a,footer a:not(.brand),.terms-page a{font-weight:900;text-decoration:none;color:#f5d27a}
 .statement-highlight{font-weight:900;color:#f5d27a}
 .faq details p{font-weight:700;color:#e7d5f5}
+
+
+/* Ticket release and group table section headings */
+.ticket-category-heading{margin:26px 2px 7px;padding-top:17px;border-top:1px solid #8f6a9f;color:#f5d27a;font-size:14px;font-weight:1000;letter-spacing:1.4px}
+.ticket-category-heading:first-of-type{margin-top:5px;border-top:0;padding-top:0}
+.ticket-category-note{margin:0 2px 13px;color:#d2c6d9;font-size:12px;line-height:1.5}
