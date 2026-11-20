@@ -212,3 +212,9 @@ footer{background:linear-gradient(180deg,#0c0712,#050309);border-top:1px solid #
 .sold-out-ticket>strong{color:#5b4b61;text-decoration:line-through;text-decoration-thickness:1px}
 .sold-out-label{display:inline-flex;align-items:center;justify-content:center;padding:7px 10px;border-radius:6px;background:#4a3158;color:#fff;font-size:10px;font-weight:1000;letter-spacing:1px;white-space:nowrap}
 @media(max-width:600px){.sold-out-ticket{grid-template-columns:38px minmax(0,1fr)}.sold-out-ticket>strong{grid-column:2;grid-row:2;font-size:15px}.sold-out-label{grid-column:2;grid-row:3;justify-self:start}}
+
+
+/* Clear, bold statement styling; links are never underlined */
+.official-warning a,footer a:not(.brand),.terms-page a{font-weight:900;text-decoration:none;color:#f5d27a}
+.statement-highlight{font-weight:900;color:#f5d27a}
+.faq details p{font-weight:700;color:#e7d5f5}
