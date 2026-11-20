@@ -303,7 +303,16 @@ mpesaButton.addEventListener("click", async () => {
   const tickets = selectedTickets();
 
   if (!tickets.length) {
-    showToast("Please select at least one ticket.");
+    showToast("Please select at least one ticket or table package.");
+    return;
+  }
+
+  const mpesaTotal = tickets.reduce(
+    (sum, ticket) => sum + prices[ticket.type] * ticket.quantity,
+    0
+  );
+  if (mpesaTotal > 250000) {
+    showToast("M-Pesa supports up to KSh 250,000 per transaction. Choose PayPal for this order.");
     return;
   }
 
