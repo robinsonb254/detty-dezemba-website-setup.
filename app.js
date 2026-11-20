@@ -1,6 +1,16 @@
 
-const prices = { Regular: 1000, VIP: 20000, VVIP: 40000, "VIP Special": 45000, "VVIP Special": 50000 };
-const quantities = { Regular: 0, VIP: 0, VVIP: 0, "VIP Special": 0, "VVIP Special": 0 };
+const prices = {
+  "General Access": 5000,
+  "Duo Ticket": 9000,
+  "Priority Access IV (VIP)": 20000,
+  "One Dance VVIP": 30000,
+  "Premium Access for Two": 37999,
+  "Kese Table": 200000,
+  "Joro Table": 500000,
+  "Soco Table": 1000000,
+  "Star Boy Table": 2000000
+};
+const quantities = Object.fromEntries(Object.keys(prices).map(type => [type, 0]));
 
 const money = n => "KSh " + n.toLocaleString("en-KE");
 
@@ -72,7 +82,7 @@ function update() {
   });
 
   totalEl.textContent = money(total);
-  countEl.textContent = `${count} ticket${count === 1 ? "" : "s"} selected`;
+  countEl.textContent = `${count} item${count === 1 ? "" : "s"} selected`;
   checkoutBtn.disabled = count === 0;
 }
 
