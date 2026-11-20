@@ -58,15 +58,23 @@
   "offers": [
     {
       "@type": "Offer",
-      "name": "Regular",
-      "price": "1000",
+      "name": "General Access",
+      "price": "5000",
       "priceCurrency": "KES",
       "availability": "https://schema.org/InStock",
       "url": "https://www.dettydezembaticketsexp.shop/#tickets"
     },
     {
       "@type": "Offer",
-      "name": "VIP",
+      "name": "Duo Ticket",
+      "price": "9000",
+      "priceCurrency": "KES",
+      "availability": "https://schema.org/InStock",
+      "url": "https://www.dettydezembaticketsexp.shop/#tickets"
+    },
+    {
+      "@type": "Offer",
+      "name": "Priority Access IV (VIP)",
       "price": "20000",
       "priceCurrency": "KES",
       "availability": "https://schema.org/InStock",
@@ -74,24 +82,48 @@
     },
     {
       "@type": "Offer",
-      "name": "VVIP",
-      "price": "40000",
+      "name": "One Dance VVIP",
+      "price": "30000",
       "priceCurrency": "KES",
       "availability": "https://schema.org/InStock",
       "url": "https://www.dettydezembaticketsexp.shop/#tickets"
     },
     {
       "@type": "Offer",
-      "name": "VIP Special",
-      "price": "45000",
+      "name": "Premium Access for Two",
+      "price": "37999",
       "priceCurrency": "KES",
       "availability": "https://schema.org/InStock",
       "url": "https://www.dettydezembaticketsexp.shop/#tickets"
     },
     {
       "@type": "Offer",
-      "name": "VVIP Special",
-      "price": "50000",
+      "name": "Kese Table",
+      "price": "200000",
+      "priceCurrency": "KES",
+      "availability": "https://schema.org/InStock",
+      "url": "https://www.dettydezembaticketsexp.shop/#tickets"
+    },
+    {
+      "@type": "Offer",
+      "name": "Joro Table",
+      "price": "500000",
+      "priceCurrency": "KES",
+      "availability": "https://schema.org/InStock",
+      "url": "https://www.dettydezembaticketsexp.shop/#tickets"
+    },
+    {
+      "@type": "Offer",
+      "name": "Soco Table",
+      "price": "1000000",
+      "priceCurrency": "KES",
+      "availability": "https://schema.org/InStock",
+      "url": "https://www.dettydezembaticketsexp.shop/#tickets"
+    },
+    {
+      "@type": "Offer",
+      "name": "Star Boy Table",
+      "price": "2000000",
       "priceCurrency": "KES",
       "availability": "https://schema.org/InStock",
       "url": "https://www.dettydezembaticketsexp.shop/#tickets"
@@ -228,63 +260,84 @@
       <p class="booking-guidance">Choose your ticket type, adjust the quantity, then review your order at checkout.</p>
       <div class="ticket-layout">
         <div class="ticket-list">
+          <h3 class="ticket-category-heading">PREVIOUS RELEASES</h3>
+          <p class="ticket-category-note">These earlier ticket categories are now closed.</p>
           <article class="ticket-row sold-out-ticket" aria-label="Regular Early Bird ticket, KSh 850, sold out">
-            <div class="ticket-icon">★</div><div class="ticket-info"><h3>REGULAR EARLY BIRD</h3><p>Early access tier</p></div>
+            <div class="ticket-icon">★</div><div class="ticket-info"><h3>REGULAR EARLY BIRD</h3><p>Early access release</p></div>
             <strong>KSh 850</strong><span class="sold-out-label">SOLD OUT</span>
           </article>
           <article class="ticket-row sold-out-ticket" aria-label="VIP Early Tier ticket, KSh 15,000, sold out">
-            <div class="ticket-icon purple">♛</div><div class="ticket-info"><h3>VIP EARLY TIER</h3><p>Early premium access</p></div>
+            <div class="ticket-icon purple">♛</div><div class="ticket-info"><h3>VIP EARLY TIER</h3><p>First premium release</p></div>
             <strong>KSh 15,000</strong><span class="sold-out-label">SOLD OUT</span>
           </article>
           <article class="ticket-row sold-out-ticket" aria-label="VVIP Early Tier ticket, KSh 30,000, sold out">
-            <div class="ticket-icon orange">◆</div><div class="ticket-info"><h3>VVIP EARLY TIER</h3><p>Early exclusive experience</p></div>
+            <div class="ticket-icon orange">◆</div><div class="ticket-info"><h3>VVIP EARLY TIER</h3><p>First exclusive release</p></div>
             <strong>KSh 30,000</strong><span class="sold-out-label">SOLD OUT</span>
           </article>
-          <article class="ticket-row" data-type="Regular" data-price="1000">
-            <div class="ticket-icon">★</div><div class="ticket-info"><h3>REGULAR</h3><p>General access</p></div>
-            <strong>KSh 1,000</strong><div class="qty"><button aria-label="Remove Regular ticket">−</button><output>0</output><button aria-label="Add Regular ticket">+</button></div>
+          <article class="ticket-row sold-out-ticket" aria-label="Regular ticket, KSh 1,000, sold out">
+            <div class="ticket-icon">★</div><div class="ticket-info"><h3>REGULAR · PREVIOUS RELEASE</h3><p>Earlier general admission tier</p></div>
+            <strong>KSh 1,000</strong><span class="sold-out-label">SOLD OUT</span>
           </article>
-          <article class="ticket-row" data-type="VIP" data-price="20000">
-            <div class="ticket-icon purple">♛</div><div class="ticket-info"><h3>VIP</h3><p>Premium access</p></div>
-            <strong>KSh 20,000</strong><div class="qty"><button aria-label="Remove VIP ticket">−</button><output>0</output><button aria-label="Add VIP ticket">+</button></div>
+          <article class="ticket-row sold-out-ticket" aria-label="VIP ticket, KSh 20,000, sold out">
+            <div class="ticket-icon purple">♛</div><div class="ticket-info"><h3>VIP · PREVIOUS RELEASE</h3><p>Earlier premium access tier</p></div>
+            <strong>KSh 20,000</strong><span class="sold-out-label">SOLD OUT</span>
           </article>
-          <article class="ticket-row" data-type="VVIP" data-price="40000">
-            <div class="ticket-icon orange">◆</div><div class="ticket-info"><h3>VVIP</h3><p>Exclusive experience</p></div>
-            <strong>KSh 40,000</strong><div class="qty"><button aria-label="Remove VVIP ticket">−</button><output>0</output><button aria-label="Add VVIP ticket">+</button></div>
+          <article class="ticket-row sold-out-ticket" aria-label="VVIP ticket, KSh 40,000, sold out">
+            <div class="ticket-icon orange">◆</div><div class="ticket-info"><h3>VVIP · PREVIOUS RELEASE</h3><p>Earlier exclusive experience</p></div>
+            <strong>KSh 40,000</strong><span class="sold-out-label">SOLD OUT</span>
           </article>
-          <article class="ticket-row special-ticket" data-type="VIP Special" data-price="45000">
-            <div class="ticket-icon purple">♛</div><div class="ticket-info"><h3>VIP SPECIAL</h3><p>Premium lounge, reserved seating &amp; dedicated hospitality</p></div>
-            <strong>KSh 45,000</strong><div class="qty"><button aria-label="Remove VIP Special ticket">−</button><output>0</output><button aria-label="Add VIP Special ticket">+</button></div>
+          <article class="ticket-row sold-out-ticket" aria-label="VIP Special ticket, KSh 45,000, sold out">
+            <div class="ticket-icon purple">♛</div><div class="ticket-info"><h3>VIP SPECIAL · PREVIOUS RELEASE</h3><p>Earlier premium hospitality tier</p></div>
+            <strong>KSh 45,000</strong><span class="sold-out-label">SOLD OUT</span>
           </article>
-          <article class="ticket-row special-ticket" data-type="VVIP Special" data-price="50000">
-            <div class="ticket-icon orange">✦</div><div class="ticket-info"><h3>VVIP SPECIAL</h3><p>Elite lounge, prime viewing &amp; enhanced hospitality</p></div>
-            <strong>KSh 50,000</strong><div class="qty"><button aria-label="Remove VVIP Special ticket">−</button><output>0</output><button aria-label="Add VVIP Special ticket">+</button></div>
+          <article class="ticket-row sold-out-ticket" aria-label="VVIP Special ticket, KSh 50,000, sold out">
+            <div class="ticket-icon orange">✦</div><div class="ticket-info"><h3>VVIP SPECIAL · PREVIOUS RELEASE</h3><p>Earlier elite hospitality tier</p></div>
+            <strong>KSh 50,000</strong><span class="sold-out-label">SOLD OUT</span>
           </article>
-          <div class="special-benefits">
-            <h3>Step into the extraordinary</h3>
-            <div class="benefit-columns">
-              <div><h4>VIP SPECIAL · KSh 45,000</h4>
-                <p>The ultimate premium festival experience.</p>
-                <ul>
-                  <li>Priority festival entry</li><li>Reserved premium seating in a prime viewing area</li>
-                  <li>Exclusive VIP lounge access</li><li>Complimentary welcome drink</li>
-                  <li>Dedicated VIP hospitality and assistance</li><li>Exclusive photo opportunities</li>
-                  <li>Premium restroom access</li><li>Special VIP wristband and recognition</li>
-                </ul>
-              </div>
-              <div><h4>VVIP SPECIAL · KSh 50,000</h4>
-                <p>Beyond ordinary luxury. Experience the festival like a star.</p>
-                <ul>
-                  <li>All VIP Special benefits</li><li>Front-stage or best-viewing-area access</li>
-                  <li>Private VVIP lounge access</li><li>Premium complimentary refreshments</li>
-                  <li>Dedicated personal hospitality service</li>
-                  <li>Selected artist meet-and-greet opportunities, subject to artist availability</li>
-                  <li>Exclusive VVIP gift package</li><li>Premium photo opportunities and VVIP recognition</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="total-line" aria-live="polite"><span id="ticketCount">0 tickets selected</span><strong id="total">KSh 0</strong></div>
+
+          <h3 class="ticket-category-heading">INDIVIDUAL &amp; COUPLE PASSES</h3>
+          <p class="ticket-category-note">Choose your preferred access or couple experience.</p>
+          <article class="ticket-row" data-type="General Access" data-price="5000">
+            <div class="ticket-icon">★</div><div class="ticket-info"><h3>GENERAL ACCESS</h3><p>Festival general admission</p></div>
+            <strong>KSh 5,000</strong><div class="qty"><button aria-label="Remove General Access">−</button><output>0</output><button aria-label="Add General Access">+</button></div>
+          </article>
+          <article class="ticket-row" data-type="Duo Ticket" data-price="9000">
+            <div class="ticket-icon purple">♡</div><div class="ticket-info"><h3>DUO TICKET</h3><p>Admission for two guests</p></div>
+            <strong>KSh 9,000</strong><div class="qty"><button aria-label="Remove Duo Ticket">−</button><output>0</output><button aria-label="Add Duo Ticket">+</button></div>
+          </article>
+          <article class="ticket-row" data-type="Priority Access IV (VIP)" data-price="20000">
+            <div class="ticket-icon purple">♛</div><div class="ticket-info"><h3>PRIORITY ACCESS IV · VIP</h3><p>Priority VIP festival access</p></div>
+            <strong>KSh 20,000</strong><div class="qty"><button aria-label="Remove Priority Access IV VIP">−</button><output>0</output><button aria-label="Add Priority Access IV VIP">+</button></div>
+          </article>
+          <article class="ticket-row" data-type="One Dance VVIP" data-price="30000">
+            <div class="ticket-icon orange">◆</div><div class="ticket-info"><h3>ONE DANCE · VVIP</h3><p>Elevated VVIP festival experience</p></div>
+            <strong>KSh 30,000</strong><div class="qty"><button aria-label="Remove One Dance VVIP">−</button><output>0</output><button aria-label="Add One Dance VVIP">+</button></div>
+          </article>
+          <article class="ticket-row special-ticket" data-type="Premium Access for Two" data-price="37999">
+            <div class="ticket-icon orange">✦</div><div class="ticket-info"><h3>PREMIUM ACCESS FOR TWO</h3><p>Premium festival access package for two guests</p></div>
+            <strong>KSh 37,999</strong><div class="qty"><button aria-label="Remove Premium Access for Two">−</button><output>0</output><button aria-label="Add Premium Access for Two">+</button></div>
+          </article>
+
+          <h3 class="ticket-category-heading">GROUP &amp; VIP TABLES</h3>
+          <p class="ticket-category-note">Private group packages include the stated bar tab.</p>
+          <article class="ticket-row special-ticket" data-type="Kese Table" data-price="200000">
+            <div class="ticket-icon purple">♛</div><div class="ticket-info"><h3>KESE TABLE</h3><p>Seats 6 guests · Includes KSh 50,000 bar tab</p></div>
+            <strong>KSh 200,000</strong><div class="qty"><button aria-label="Remove Kese Table">−</button><output>0</output><button aria-label="Add Kese Table">+</button></div>
+          </article>
+          <article class="ticket-row special-ticket" data-type="Joro Table" data-price="500000">
+            <div class="ticket-icon purple">♛</div><div class="ticket-info"><h3>JORO TABLE</h3><p>Seats 8 guests · Includes KSh 100,000 bar tab</p></div>
+            <strong>KSh 500,000</strong><div class="qty"><button aria-label="Remove Joro Table">−</button><output>0</output><button aria-label="Add Joro Table">+</button></div>
+          </article>
+          <article class="ticket-row special-ticket" data-type="Soco Table" data-price="1000000">
+            <div class="ticket-icon orange">✦</div><div class="ticket-info"><h3>SOCO TABLE</h3><p>Seats 12 guests · Includes KSh 200,000 bar tab</p></div>
+            <strong>KSh 1,000,000</strong><div class="qty"><button aria-label="Remove Soco Table">−</button><output>0</output><button aria-label="Add Soco Table">+</button></div>
+          </article>
+          <article class="ticket-row special-ticket" data-type="Star Boy Table" data-price="2000000">
+            <div class="ticket-icon orange">✦</div><div class="ticket-info"><h3>STAR BOY TABLE</h3><p>Seats 20 guests · Includes KSh 500,000 bar tab</p></div>
+            <strong>KSh 2,000,000</strong><div class="qty"><button aria-label="Remove Star Boy Table">−</button><output>0</output><button aria-label="Add Star Boy Table">+</button></div>
+          </article>
+
+          <div class="total-line" aria-live="polite"><span id="ticketCount">0 items selected</span><strong id="total">KSh 0</strong></div>
           <button class="cta checkout-btn" id="checkoutBtn" disabled>PROCEED TO CHECKOUT <b>→</b></button>
         </div>
         <aside class="payment-card">
@@ -304,7 +357,7 @@
     <section class="faq section" id="faq">
       <div class="section-heading"><p class="eyebrow">NEED TO KNOW</p><h2>Frequently asked <em>questions</em></h2></div>
       <details><summary>When and where is the festival?</summary><p>Saturday, 12 December 2026, 2:00 PM to Sunday, 13 December 2026, 5:00 AM at Laureate Gardens, Nairobi.</p></details>
-      <details><summary>What ticket categories are available?</summary><p>Regular (KSh 1,000), VIP (KSh 20,000), VVIP (KSh 40,000), VIP Special (KSh 45,000) and VVIP Special (KSh 50,000).</p></details>
+      <details><summary>What ticket categories and tables are available?</summary><p>General Access (KSh 5,000), Duo Ticket (KSh 9,000), Priority Access IV VIP (KSh 20,000), One Dance VVIP (KSh 30,000), Premium Access for Two (KSh 37,999), plus Kese, Joro, Soco and Star Boy group tables.</p></details>
       <details><summary>How do I get help with my ticket?</summary><p>For ticket purchase or delivery assistance, contact the official team using the contact details at the bottom of this page.</p></details>
       <details><summary>Which payment methods are available?</summary><p><strong class="statement-highlight">M-Pesa and PayPal.</strong></p></details>
     </section>
