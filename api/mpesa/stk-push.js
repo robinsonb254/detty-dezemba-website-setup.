@@ -83,6 +83,12 @@ export default async function handler(req, res) {
       });
     }
 
+    if (amount > 250000) {
+      return res.status(400).json({
+        error: "M-Pesa supports up to KSh 250,000 per transaction. Choose PayPal for larger orders."
+      });
+    }
+
     const auth = Buffer.from(
       `${MPESA_CONSUMER_KEY}:${MPESA_CONSUMER_SECRET}`
     ).toString("base64");
