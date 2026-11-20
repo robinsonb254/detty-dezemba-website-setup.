@@ -89,16 +89,20 @@ export default async function handler(req, res) {
       Array.isArray(tickets) &&
       tickets.length > 0
     ) {
-      const allowedPrices = {
-        Regular: 7.70,
-        VIP: 153.90,
-        VVIP: 307.80,
-        "VIP Special": 346.28,
-        "VVIP Special": 384.75
+      const allowedPricesInCents = {
+        "General Access": 3848,
+        "Duo Ticket": 6926,
+        "Priority Access IV (VIP)": 15390,
+        "One Dance VVIP": 23089,
+        "Premium Access for Two": 29241,
+        "Kese Table": 153905,
+        "Joro Table": 384763,
+        "Soco Table": 769527,
+        "Star Boy Table": 1539053
       };
 
       const validTickets = tickets.every(ticket =>
-        allowedPrices[ticket.type] &&
+        Object.prototype.hasOwnProperty.call(allowedPricesInCents, ticket.type) &&
         Number.isInteger(ticket.quantity) &&
         ticket.quantity >= 1 &&
         ticket.quantity <= 10
@@ -117,14 +121,14 @@ export default async function handler(req, res) {
         });
       }
 
-      const expectedTotal = tickets.reduce(
+      const expectedTotalCents = tickets.reduce(
         (sum, ticket) =>
-          sum + allowedPrices[ticket.type] * ticket.quantity,
+          sum + allowedPricesInCents[ticket.type] * ticket.quantity,
         0
       );
 
       const actualCents = Math.round(Number(amount) * 100);
-      const expectedCents = Math.round(expectedTotal * 100);
+      const expectedCents = expectedTotalCents;
 
       if (actualCents === expectedCents) {
         const ticketLines = tickets.map(ticket =>
