@@ -5,7 +5,7 @@ const quantities = { Regular: 0, VIP: 0, VVIP: 0, "VIP Special": 0, "VVIP Specia
 const money = n => "KSh " + n.toLocaleString("en-KE");
 
 function updateFestivalCountdown() {
-  const target = new Date("2026-12-12T00:00:00+03:00").getTime();
+  const target = new Date("2026-12-12T18:00:00+03:00").getTime();
   const now = Date.now();
   const remaining = target - now;
   const countdown = document.getElementById("festivalCountdown");
