@@ -1,10 +1,14 @@
 
 const pricesInCents = {
-  Regular: 770,
-  VIP: 15390,
-  VVIP: 30780,
-  "VIP Special": 34628,
-  "VVIP Special": 38475
+  "General Access": 3848,
+  "Duo Ticket": 6926,
+  "Priority Access IV (VIP)": 15390,
+  "One Dance VVIP": 23089,
+  "Premium Access for Two": 29241,
+  "Kese Table": 153905,
+  "Joro Table": 384763,
+  "Soco Table": 769527,
+  "Star Boy Table": 1539053
 };
 
 export default async function handler(req, res) {
@@ -28,7 +32,7 @@ export default async function handler(req, res) {
 
     const tickets = req.body?.tickets;
 
-    if (!Array.isArray(tickets) || tickets.length < 1 || tickets.length > 5) {
+    if (!Array.isArray(tickets) || tickets.length < 1 || tickets.length > 9) {
       return res.status(400).json({ error: "Invalid ticket selection" });
     }
 
