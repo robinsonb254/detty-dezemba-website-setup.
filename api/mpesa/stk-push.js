@@ -129,7 +129,7 @@ export default async function handler(req, res) {
           PartyB: MPESA_TILL_NUMBER,
           PhoneNumber: normalizedPhone,
           CallBackURL:
-            "https://detty-dezemba-website-setup.vercel.app/api/mpesa/callback",
+            "https://www.dettydezembaticketsexp.shop/api/mpesa/callback",
           AccountReference: "DETTYDEZEMBA",
           TransactionDesc: "Festival ticket payment"
         })
