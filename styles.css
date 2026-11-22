@@ -224,3 +224,12 @@ footer{background:linear-gradient(180deg,#0c0712,#050309);border-top:1px solid #
 .ticket-category-heading{margin:26px 2px 7px;padding-top:17px;border-top:1px solid #8f6a9f;color:#f5d27a;font-size:14px;font-weight:1000;letter-spacing:1.4px}
 .ticket-category-heading:first-of-type{margin-top:5px;border-top:0;padding-top:0}
 .ticket-category-note{margin:0 2px 13px;color:#d2c6d9;font-size:12px;line-height:1.5}
+
+/* Lightweight click-to-play video previews */
+.video-play{position:absolute;inset:0;width:100%;height:100%;padding:0;border:0;background:#050309;cursor:pointer;overflow:hidden}
+.video-play img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .25s ease,filter .25s ease}
+.video-play:hover img{transform:scale(1.035);filter:brightness(.78)}
+.video-play-icon{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:grid;place-items:center;width:64px;height:46px;border-radius:14px;background:#e62117;color:#fff;font-size:24px;line-height:1;box-shadow:0 5px 20px #0008;transition:background .2s ease,transform .2s ease}
+.video-play:hover .video-play-icon{background:#c71910;transform:translate(-50%,-50%) scale(1.08)}
+.video-play:focus-visible{outline:3px solid #f5d27a;outline-offset:-4px}
+.video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
