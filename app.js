@@ -352,3 +352,23 @@ mpesaButton.addEventListener("click", async () => {
 paymentChoice.addEventListener("change", updatePaymentDisplay);
 
 update();
+
+
+// Load the YouTube player only after a visitor chooses to play a video.
+document.addEventListener("click", event => {
+  const playButton = event.target.closest(".video-play[data-youtube-id]");
+  if (!playButton) return;
+
+  const videoId = playButton.dataset.youtubeId;
+  if (!/^[a-zA-Z0-9_-]{11}$/.test(videoId)) return;
+
+  const iframe = document.createElement("iframe");
+  iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`;
+  iframe.title = playButton.getAttribute("aria-label") || "Festival music video";
+  iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+  iframe.allowFullscreen = true;
+  iframe.referrerPolicy = "strict-origin-when-cross-origin";
+  iframe.loading = "eager";
+
+  playButton.replaceWith(iframe);
+});
