@@ -53,6 +53,7 @@ const mpesaButton = document.getElementById("mpesa-pay-button");
 
 let paypalSdkPromise = null;
 let paypalRendered = false;
+let mpesaRequestSent = false;
 
 function showToast(message) {
   toast.textContent = message;
@@ -122,6 +123,7 @@ function updatePaymentDisplay() {
 }
 
 checkoutBtn.addEventListener("click", () => {
+  if (mpesaRequestSent) return;
   const tickets = selectedTickets();
 
   const lines = tickets.map(ticket =>
@@ -339,8 +341,11 @@ mpesaButton.addEventListener("click", async () => {
       throw new Error(result.error || result.errorMessage || "M-Pesa request failed.");
     }
 
-    showToast("M-Pesa prompt sent. Enter your PIN on your phone to pay.");
-    mpesaButton.textContent = "Payment request sent";
+    // Safaricom handles the payment confirmation directly with the buyer.
+    // Close the website checkout immediately and show no post-request details.
+    mpesaRequestSent = true;
+    checkoutBtn.disabled = true;
+    dialog.close();
 
   } catch (error) {
     showToast(error.message || "M-Pesa payment failed. Please try again.");
