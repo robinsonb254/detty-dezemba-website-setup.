@@ -1,4 +1,4 @@
-import { sendGa4Purchase } from "../_lib/ga4.js";
+import { sendGa4Purchase } from "../../lib/ga4.js";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
