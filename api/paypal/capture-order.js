@@ -1,3 +1,4 @@
+import { sendGa4Purchase } from "../_lib/ga4.js";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -5,7 +6,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { orderID, buyer, tickets } = req.body || {};
+    const { orderID, buyer, tickets, analyticsClientId } = req.body || {};
 
     if (!orderID || typeof orderID !== "string") {
       return res.status(400).json({ error: "Missing PayPal order ID" });
@@ -77,6 +78,41 @@ export default async function handler(req, res) {
     const transactionID = payment.id;
     const amount = payment.amount?.value;
     const currency = payment.amount?.currency_code;
+
+    // This event is emitted only after PayPal confirms a completed capture.
+    const analyticsPricesInCents = {
+      "General Access": 3848,
+      "Duo Ticket": 6926,
+      "Priority Access IV (VIP)": 15390,
+      "One Dance VVIP": 23089,
+      "Premium Access for Two": 29241,
+      "Kese Table": 153905,
+      "Joro Table": 384763,
+      "Soco Table": 769527,
+      "Star Boy Table": 1539053
+    };
+    const analyticsItems = Array.isArray(tickets)
+      ? tickets.filter(ticket =>
+          ticket &&
+          Object.prototype.hasOwnProperty.call(analyticsPricesInCents, ticket.type) &&
+          Number.isInteger(ticket.quantity) &&
+          ticket.quantity >= 1 &&
+          ticket.quantity <= 10
+        ).map(ticket => ({
+          item_id: ticket.type,
+          item_name: ticket.type,
+          quantity: ticket.quantity,
+          price: analyticsPricesInCents[ticket.type] / 100
+        }))
+      : [];
+    await sendGa4Purchase({
+      transactionId,
+      value: Number(amount),
+      currency,
+      items: analyticsItems,
+      clientIdSeed: transactionID,
+      analyticsClientId
+    });
 
     let emailSent = false;
 
