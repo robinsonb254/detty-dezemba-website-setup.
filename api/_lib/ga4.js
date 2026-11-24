@@ -26,31 +26,35 @@ export async function sendGa4Purchase({
     ...(Number.isFinite(Number(item.price)) ? { price: Number(item.price) } : {})
   })) : [];
 
-  const response = await fetch(
-    "https://www.google-analytics.com/mp/collect?measurement_id=" +
-      encodeURIComponent(measurementId) + "&api_secret=" + encodeURIComponent(apiSecret),
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        client_id: clientId,
-        events: [{
-          name: "purchase",
-          params: {
-            transaction_id: String(transactionId).slice(0, 100),
-            value: Number(value),
-            currency: String(currency || "KES").toUpperCase(),
-            engagement_time_msec: 1,
-            ...(safeItems.length ? { items: safeItems } : {})
-          }
-        }]
-      })
+  try {
+    const response = await fetch(
+      "https://www.google-analytics.com/mp/collect?measurement_id=" +
+        encodeURIComponent(measurementId) + "&api_secret=" + encodeURIComponent(apiSecret),
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          client_id: clientId,
+          events: [{
+            name: "purchase",
+            params: {
+              transaction_id: String(transactionId).slice(0, 100),
+              value: Number(value),
+              currency: String(currency || "KES").toUpperCase(),
+              engagement_time_msec: 1,
+              ...(safeItems.length ? { items: safeItems } : {})
+            }
+          }]
+        })
+      }
+    );
+    if (!response.ok) {
+      console.error("GA4 purchase event failed:", response.status, await response.text());
+      return { sent: false, reason: "GA4 Measurement Protocol request failed." };
     }
-  );
-
-  if (!response.ok) {
-    console.error("GA4 purchase event failed:", response.status, await response.text());
+    return { sent: true };
+  } catch (error) {
+    console.error("GA4 purchase event transport error:", error);
     return { sent: false, reason: "GA4 Measurement Protocol request failed." };
   }
-  return { sent: true };
 }
