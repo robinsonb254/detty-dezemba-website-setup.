@@ -341,11 +341,26 @@ mpesaButton.addEventListener("click", async () => {
       throw new Error(result.error || result.errorMessage || "M-Pesa request failed.");
     }
 
-    // Safaricom handles the payment confirmation directly with the buyer.
-    // Close the website checkout immediately and show no post-request details.
+    // Keep checkout visible while the buyer enters the PIN and Safaricom processes payment.
+    // An accepted STK request is not proof that payment has completed.
     mpesaRequestSent = true;
     checkoutBtn.disabled = true;
-    dialog.close();
+    mpesaButton.disabled = true;
+    mpesaButton.textContent = "M-Pesa prompt sent — check your phone";
+    paymentChoice.disabled = true;
+
+    let pendingNotice = document.getElementById("mpesa-pending-notice");
+    if (!pendingNotice) {
+      pendingNotice = document.createElement("p");
+      pendingNotice.id = "mpesa-pending-notice";
+      pendingNotice.className = "notice";
+      pendingNotice.setAttribute("role", "status");
+      pendingNotice.setAttribute("aria-live", "polite");
+      mpesaContainer.appendChild(pendingNotice);
+    }
+    pendingNotice.textContent =
+      result.message ||
+      "Enter your M-Pesa PIN on your phone and keep this checkout open while Safaricom processes the payment. Your order is not confirmed until payment is verified.";
 
   } catch (error) {
     showToast(error.message || "M-Pesa payment failed. Please try again.");
