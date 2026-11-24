@@ -96,12 +96,27 @@ document.querySelectorAll(".ticket-row").forEach(row => {
   const [minus, plus] = buttons;
 
   minus.addEventListener("click", () => {
+    const previousQuantity = quantities[type];
     quantities[type] = Math.max(0, quantities[type] - 1);
+    if (previousQuantity > quantities[type] && window.dettyTrack) {
+      window.dettyTrack("remove_from_cart", {
+        currency: "KES", value: prices[type],
+        items: [{ item_id: type, item_name: type, price: prices[type], quantity: 1 }]
+      });
+    }
     update();
   });
 
   plus.addEventListener("click", () => {
+    if (quantities[type] >= 10) return;
     quantities[type] = Math.min(10, quantities[type] + 1);
+    if (window.dettyTrack) {
+      window.dettyTrack("select_item", {
+        item_list_name: "Detty Dezemba 2026 tickets",
+        currency: "KES", value: prices[type],
+        items: [{ item_id: type, item_name: type, price: prices[type], quantity: 1 }]
+      });
+    }
     update();
   });
 });
@@ -140,6 +155,15 @@ checkoutBtn.addEventListener("click", () => {
     `<hr><strong>Total: ${money(total)}</strong>`;
 
   dialog.showModal();
+  if (window.dettyTrack) {
+    window.dettyTrack("begin_checkout", {
+      currency: "KES", value: total,
+      items: tickets.map(ticket => ({
+        item_id: ticket.type, item_name: ticket.type,
+        price: prices[ticket.type], quantity: ticket.quantity
+      }))
+    });
+  }
   updatePaymentDisplay();
 });
 
@@ -255,7 +279,10 @@ async function renderPayPalButtons() {
           body: JSON.stringify({
             orderID: data.orderID,
             buyer,
-            tickets: currentTickets
+            tickets: currentTickets,
+            analyticsClientId: window.dettyGetAnalyticsClientId
+              ? await window.dettyGetAnalyticsClientId()
+              : null
           })
         });
 
@@ -369,7 +396,14 @@ mpesaButton.addEventListener("click", async () => {
   }
 });
 
-paymentChoice.addEventListener("change", updatePaymentDisplay);
+paymentChoice.addEventListener("change", () => {
+  updatePaymentDisplay();
+  if (window.dettyTrack) {
+    window.dettyTrack("add_payment_info", {
+      currency: "KES", payment_type: paymentChoice.value
+    });
+  }
+});
 
 update();
 
