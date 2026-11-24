@@ -1,3 +1,4 @@
+import { sendGa4Purchase } from "../_lib/ga4.js";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -28,6 +29,16 @@ export default async function handler(req, res) {
       checkoutRequestID: callback.CheckoutRequestID || "Not provided",
       merchantRequestID: callback.MerchantRequestID || "Not provided"
     };
+
+    // Count a purchase only after Safaricom confirms success and returns a receipt.
+    if (successful && details.mpesaReceipt !== "Not provided") {
+      await sendGa4Purchase({
+        transactionId: details.mpesaReceipt,
+        value: Number(details.amount),
+        currency: "KES",
+        clientIdSeed: details.checkoutRequestID
+      });
+    }
 
     if (!process.env.RESEND_API_KEY) {
       console.error("RESEND_API_KEY is missing");
