@@ -1,27 +1,48 @@
-# Detty Dezemba Festival — website package
+# Detty Dezemba Festival — website
 
-## Event details
+## Official event details
 - Date: Saturday, 12 December 2026
-- Venue: Laureate Gardens, Nairobi, Kenya
-- Regular: KSh 1,000
-- VIP: KSh 5,000
-- VVIP: KSh 10,000
+- Time: 2:00 PM Saturday to 5:00 AM Sunday, 13 December 2026 (EAT)
+- Venue: Laureate Gardens, Kasarani, Nairobi, Kenya
+- Featured lineup: Wizkid, Uncle Waffles and Dancer Faith
+- Official website: https://www.dettydezembaticketsexp.shop
 - Official email: detty.dezembatickets@gmail.com
-- Official phone: 0782509438
-- Official website: https://dettydezembaticketsexp.shop
+- Official phone: +254180134621
+- Payment methods shown at checkout: M-Pesa and PayPal
 
-## Files
-- `index.html` — festival homepage and ticket-selection preview
-- `terms.html` — ticketing Terms & Conditions
-- `styles.css` — responsive black, purple and gold design
-- `app.js` — ticket quantity and checkout preview interactions
-- `assets/wizkid.jpg` — Wizkid image
-- `assets/dancer-faith.jpg` — Dancer Faith image
-- `assets/design-concept.png` — original design reference
+## Current ticket categories
+- General Access: KSh 5,000
+- Duo Ticket: KSh 9,000
+- Priority Access IV (VIP): KSh 20,000
+- One Dance VVIP: KSh 30,000
+- Premium Access for Two: KSh 37,999
+- Kese Table: KSh 200,000
+- Joro Table: KSh 500,000
+- Soco Table: KSh 1,000,000
+- Star Boy Table: KSh 2,000,000
 
-## Important before launch
-The ticket checkout remains a **preview only**. It does not collect payments, verify transactions, store orders, or issue tickets. Connect a secure payment gateway and backend before selling tickets. Issue tickets only after provider-verified successful payment. Never place secret API keys in frontend files.
+## Main files
+- `index.html` — festival homepage and ticket checkout interface
+- `tickets.html` — ticket categories, prices and purchase-intent content
+- `app.js` — ticket selection, checkout, PayPal and M-Pesa browser flows
+- `analytics.js` — optional GA4 page and checkout funnel instrumentation
+- `api/analytics/config.js` — serves the public GA4 Measurement ID when configured
+- `api/paypal/` — PayPal order creation and capture
+- `api/mpesa/` — M-Pesa STK Push and Safaricom callback
+- `lib/ga4.js` — server-side GA4 purchase event helper
+- `ANALYTICS-SETUP.md` — GA4 property, environment variable and key-event setup
 
-The existing source package did not contain an Uncle Waffles photo, so her lineup card remains a branded graphic placeholder rather than displaying an unverified or incorrect photo. Add an authorised image to `assets/` when available.
+## Payments and purchase verification
+The website supports M-Pesa and PayPal. PayPal purchases are recorded for analytics only after PayPal confirms a completed capture. M-Pesa purchases are recorded for analytics only after Safaricom's callback reports a successful result and provides a receipt number. An initiated STK Push is not counted as a purchase.
 
-Review event details, artist permissions, age restrictions, refund arrangements and the Terms & Conditions for legal compliance before public ticket sales.
+GA4 is not the payment ledger. Reconcile actual sales against Safaricom and PayPal transaction records.
+
+## Analytics activation required
+The GA4 implementation is committed but inactive until the Detty Dezemba GA4 web stream is created and these Vercel Production environment variables are configured:
+- `GA4_MEASUREMENT_ID`
+- `GA4_API_SECRET`
+
+Follow `ANALYTICS-SETUP.md` before expecting analytics events or sales reports. No measurement ID or API secret is stored in the repository.
+
+## Security
+Never put payment credentials, GA4 API secrets, M-Pesa PINs, or customer personal information in frontend code or source control. Do not send buyer names, email addresses or phone numbers to Google Analytics.
