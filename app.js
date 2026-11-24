@@ -111,7 +111,7 @@ document.querySelectorAll(".ticket-row").forEach(row => {
     if (quantities[type] >= 10) return;
     quantities[type] = Math.min(10, quantities[type] + 1);
     if (window.dettyTrack) {
-      window.dettyTrack("select_item", {
+      window.dettyTrack("add_to_cart", {
         item_list_name: "Detty Dezemba 2026 tickets",
         currency: "KES", value: prices[type],
         items: [{ item_id: type, item_name: type, price: prices[type], quantity: 1 }]
@@ -406,6 +406,19 @@ paymentChoice.addEventListener("change", () => {
 });
 
 update();
+
+if (window.dettyTrack) {
+  window.dettyTrack("view_item_list", {
+    item_list_name: "Detty Dezemba 2026 tickets",
+    currency: "KES",
+    items: Object.entries(prices).map(([type, price]) => ({
+      item_id: type,
+      item_name: type,
+      price,
+      quantity: 1
+    }))
+  });
+}
 
 
 // Load the YouTube player only after a visitor chooses to play a video.
