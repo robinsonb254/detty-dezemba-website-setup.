@@ -4,9 +4,13 @@
   window.gtag = window.gtag || gtag;
   let measurementId = null;
   let analyticsReady = false;
+  const pendingEvents = [];
 
   window.dettyTrack = function (eventName, parameters) {
-    if (!measurementId || !analyticsReady) return false;
+    if (!measurementId || !analyticsReady) {
+      pendingEvents.push({ eventName, parameters: parameters || {} });
+      return false;
+    }
     window.gtag("event", eventName, parameters || {});
     return true;
   };
@@ -36,6 +40,27 @@
           page_location: window.location.href
         });
         analyticsReady = true;
+        pendingEvents.splice(0).forEach(event =>
+          window.gtag("event", event.eventName, event.parameters)
+        );
+        const ticketCards = Array.from(document.querySelectorAll(".price-card"));
+        if (ticketCards.length) {
+          window.gtag("event", "view_item_list", {
+            item_list_name: "Detty Dezemba 2026 ticket prices page",
+            currency: "KES",
+            items: ticketCards.map(card => {
+              const name = card.querySelector("h2")?.textContent?.trim() || "Festival ticket";
+              const priceText = card.querySelector("strong")?.textContent || "";
+              const price = Number(priceText.replace(/[^0-9]/g, "")) || undefined;
+              return {
+                item_id: name,
+                item_name: name,
+                ...(price ? { price } : {}),
+                quantity: 1
+              };
+            })
+          });
+        }
       };
       script.onerror = () => console.error("Detty Dezemba analytics library could not load.");
       document.head.appendChild(script);
