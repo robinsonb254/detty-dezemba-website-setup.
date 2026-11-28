@@ -80,17 +80,8 @@ export default async function handler(req, res) {
     const currency = payment.amount?.currency_code;
 
     // This event is emitted only after PayPal confirms a completed capture.
-    const analyticsPricesInCents = {
-      "General Access": 3848,
-      "Duo Ticket": 6926,
-      "Priority Access IV (VIP)": 15390,
-      "One Dance VVIP": 23089,
-      "Premium Access for Two": 29241,
-      "Kese Table": 153905,
-      "Joro Table": 384763,
-      "Soco Table": 769527,
-      "Star Boy Table": 1539053
-    };
+    const promoActive=Date.now()>=Date.parse("2026-11-28T03:03:26+03:00")&&Date.now()<Date.parse("2026-12-05T03:03:26+03:00");
+    const analyticsPricesInCents={"General Access":promoActive?1924:3848,"Duo Ticket":promoActive?3463:6926,"Priority Access IV (VIP)":promoActive?7695:15390,"One Dance VVIP":23089,"Premium Access for Two":29241,"Kese Table":153905,"Joro Table":384763,"Soco Table":769527,"Star Boy Table":1539053};
     const analyticsItems = Array.isArray(tickets)
       ? tickets.filter(ticket =>
           ticket &&
@@ -126,15 +117,11 @@ export default async function handler(req, res) {
       tickets.length > 0
     ) {
       const allowedPricesInCents = {
-        "General Access": 3848,
-        "Duo Ticket": 6926,
-        "Priority Access IV (VIP)": 15390,
-        "One Dance VVIP": 23089,
-        "Premium Access for Two": 29241,
-        "Kese Table": 153905,
-        "Joro Table": 384763,
-        "Soco Table": 769527,
-        "Star Boy Table": 1539053
+        "General Access": promoActive ? 1924 : 3848,
+        "Duo Ticket": promoActive ? 3463 : 6926,
+        "Priority Access IV (VIP)": promoActive ? 7695 : 15390,
+        "One Dance VVIP": 23089, "Premium Access for Two": 29241,
+        "Kese Table": 153905, "Joro Table": 384763, "Soco Table": 769527, "Star Boy Table": 1539053
       };
 
       const validTickets = tickets.every(ticket =>
