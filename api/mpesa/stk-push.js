@@ -45,7 +45,7 @@ export default async function handler(req, res) {
       });
     }
 
-    const promoActive=Date.now()>=Date.parse("2026-11-28T03:53:19+03:00")&&Date.now()<Date.parse("2026-12-06T03:53:19+03:00");
+    const promoActive=Date.now()>=Date.parse("2026-11-30T00:00:00+03:00")&&Date.now()<Date.parse("2026-12-08T00:00:00+03:00");
     const prices={"General Access":promoActive?2500:5000,"Duo Ticket":promoActive?4500:9000,"Priority Access IV (VIP)":promoActive?10000:20000,"One Dance VVIP":30000,"Premium Access for Two":37999,"Kese Table":200000,"Joro Table":500000,"Soco Table":1000000,"Star Boy Table":2000000};
 
     let amount = 0;
