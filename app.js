@@ -1,15 +1,8 @@
 
-const prices = {
-  "General Access": 5000,
-  "Duo Ticket": 9000,
-  "Priority Access IV (VIP)": 20000,
-  "One Dance VVIP": 30000,
-  "Premium Access for Two": 37999,
-  "Kese Table": 200000,
-  "Joro Table": 500000,
-  "Soco Table": 1000000,
-  "Star Boy Table": 2000000
-};
+const PROMO_START="2026-11-28T03:03:26+03:00", PROMO_END="2026-12-05T03:03:26+03:00";
+const promoActive=Date.now()>=Date.parse(PROMO_START)&&Date.now()<Date.parse(PROMO_END);
+const regularPrices={"General Access":5000,"Duo Ticket":9000,"Priority Access IV (VIP)":20000,"One Dance VVIP":30000,"Premium Access for Two":37999,"Kese Table":200000,"Joro Table":500000,"Soco Table":1000000,"Star Boy Table":2000000};
+const prices={...regularPrices,...(promoActive?{"General Access":2500,"Duo Ticket":4500,"Priority Access IV (VIP)":10000}:{})};
 const quantities = Object.fromEntries(Object.keys(prices).map(type => [type, 0]));
 
 const money = n => "KSh " + n.toLocaleString("en-KE");
@@ -39,7 +32,9 @@ function updateFestivalCountdown() {
 }
 
 updateFestivalCountdown();
-setInterval(updateFestivalCountdown, 1000);
+setInterval(updateFestivalCountdown,1000);
+function updateOfferCountdown(){const el=document.getElementById("ticketOfferCountdown");if(!el)return;const st=Date.parse("2026-11-28T03:03:26+03:00"),en=Date.parse("2026-12-05T03:03:26+03:00"),now=Date.now();if(now<st){el.textContent="Offer starts soon";return;}if(now>=en){el.closest(".ticket-offer-banner")?.remove();return;}const ms=en-now,d=Math.floor(ms/86400000),h=Math.floor(ms%86400000/3600000),m=Math.floor(ms%3600000/60000),s=Math.floor(ms%60000/1000);el.textContent=d+"d "+String(h).padStart(2,"0")+"h "+String(m).padStart(2,"0")+"m "+String(s).padStart(2,"0")+"s";}
+updateOfferCountdown();setInterval(updateOfferCountdown,1000);
 
 const totalEl = document.getElementById("total");
 const countEl = document.getElementById("ticketCount");
@@ -68,6 +63,7 @@ function selectedTickets() {
 }
 
 function update() {
+  document.querySelectorAll('.ticket-row[data-type]').forEach(row=>{const type=row.dataset.type,el=row.querySelector(':scope > strong');if(!el||!regularPrices[type])return;el.innerHTML=promoActive&&prices[type]!==regularPrices[type]?'<span class="ticket-old-price">'+money(regularPrices[type])+'</span><span class="ticket-offer-price">'+money(prices[type])+'</span>':money(prices[type]);});
   let total = 0;
   let count = 0;
 
