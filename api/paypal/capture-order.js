@@ -87,8 +87,7 @@ export default async function handler(req, res) {
           ticket &&
           Object.prototype.hasOwnProperty.call(analyticsPricesInCents, ticket.type) &&
           Number.isInteger(ticket.quantity) &&
-          ticket.quantity >= 1 &&
-          ticket.quantity <= 10
+          ticket.quantity >= 1
         ).map(ticket => ({
           item_id: ticket.type,
           item_name: ticket.type,
@@ -127,8 +126,7 @@ export default async function handler(req, res) {
       const validTickets = tickets.every(ticket =>
         Object.prototype.hasOwnProperty.call(allowedPricesInCents, ticket.type) &&
         Number.isInteger(ticket.quantity) &&
-        ticket.quantity >= 1 &&
-        ticket.quantity <= 10
+        ticket.quantity >= 1
       );
 
       if (!validTickets || currency !== "USD") {
