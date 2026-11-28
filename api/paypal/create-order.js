@@ -1,5 +1,5 @@
 
-const promoActive=Date.now()>=Date.parse("2026-11-28T03:53:19+03:00")&&Date.now()<Date.parse("2026-12-06T03:53:19+03:00");
+const promoActive=Date.now()>=Date.parse("2026-11-30T00:00:00+03:00")&&Date.now()<Date.parse("2026-12-08T00:00:00+03:00");
 const pricesInCents={"General Access":promoActive?1924:3848,"Duo Ticket":promoActive?3463:6926,"Priority Access IV (VIP)":promoActive?7695:15390,"One Dance VVIP":23089,"Premium Access for Two":29241,"Kese Table":153905,"Joro Table":384763,"Soco Table":769527,"Star Boy Table":1539053};
 
 export default async function handler(req, res) {
