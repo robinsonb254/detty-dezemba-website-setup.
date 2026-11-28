@@ -104,8 +104,7 @@ document.querySelectorAll(".ticket-row").forEach(row => {
   });
 
   plus.addEventListener("click", () => {
-    if (quantities[type] >= 10) return;
-    quantities[type] = Math.min(10, quantities[type] + 1);
+    quantities[type] += 1;
     if (window.dettyTrack) {
       window.dettyTrack("add_to_cart", {
         item_list_name: "Detty Dezemba 2026 tickets",
