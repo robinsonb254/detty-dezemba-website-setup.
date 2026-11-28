@@ -35,7 +35,6 @@ export default async function handler(req, res) {
         !Object.prototype.hasOwnProperty.call(pricesInCents, ticket.type) ||
         !Number.isInteger(ticket.quantity) ||
         ticket.quantity < 1 ||
-        ticket.quantity > 10 ||
         seen.has(ticket.type)
       ) {
         return res.status(400).json({ error: "Invalid ticket selection" });
