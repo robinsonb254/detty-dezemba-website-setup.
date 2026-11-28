@@ -57,8 +57,7 @@ export default async function handler(req, res) {
       if (
         !price ||
         !Number.isInteger(quantity) ||
-        quantity < 1 ||
-        quantity > 20
+        quantity < 1
       ) {
         return res.status(400).json({
           error: "Invalid ticket selection."
