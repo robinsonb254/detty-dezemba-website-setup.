@@ -79,24 +79,60 @@ export default async function handler(req, res) {
     const amount = payment.amount?.value;
     const currency = payment.amount?.currency_code;
 
-    // This event is emitted only after PayPal confirms a completed capture.
-    const promoActive=Date.now()>=Date.parse("2026-11-28T03:53:19+03:00")&&Date.now()<Date.parse("2026-12-06T03:53:19+03:00");
-    const analyticsPricesInCents={"General Access":promoActive?1924:3848,"Duo Ticket":promoActive?3463:6926,"Priority Access IV (VIP)":promoActive?7695:15390,"One Dance VVIP":23089,"Premium Access for Two":29241,"Kese Table":153905,"Joro Table":384763,"Soco Table":769527,"Star Boy Table":1539053};
-    const analyticsItems = Array.isArray(tickets)
-      ? tickets.filter(ticket =>
-          ticket &&
-          Object.prototype.hasOwnProperty.call(analyticsPricesInCents, ticket.type) &&
-          Number.isInteger(ticket.quantity) &&
-          ticket.quantity >= 1
-        ).map(ticket => ({
-          item_id: ticket.type,
-          item_name: ticket.type,
-          quantity: ticket.quantity,
-          price: analyticsPricesInCents[ticket.type] / 100
-        }))
-      : [];
+    // Validate the captured amount against the server-approved regular and offer price schedules.
+    // Orders created during the offer remain valid if PayPal capture completes after the offer expires.
+    const regularPricesInCents = {
+      "General Access": 3848, "Duo Ticket": 6926, "Priority Access IV (VIP)": 15390,
+      "One Dance VVIP": 23089, "Premium Access for Two": 29241,
+      "Kese Table": 153905, "Joro Table": 384763, "Soco Table": 769527, "Star Boy Table": 1539053
+    };
+    const promoPricesInCents = {
+      ...regularPricesInCents,
+      "General Access": 1924, "Duo Ticket": 3463, "Priority Access IV (VIP)": 7695
+    };
+    const validTickets = Array.isArray(tickets) && tickets.length > 0 && tickets.length <= 9 &&
+      tickets.every(ticket =>
+        ticket &&
+        Object.prototype.hasOwnProperty.call(regularPricesInCents, ticket.type) &&
+        Number.isInteger(ticket.quantity) &&
+        ticket.quantity >= 1
+      );
+    const actualCents = Math.round(Number(amount) * 100);
+    const totalFor = prices => validTickets
+      ? tickets.reduce((sum, ticket) => sum + prices[ticket.type] * ticket.quantity, 0)
+      : -1;
+    const regularTotalCents = totalFor(regularPricesInCents);
+    const promoTotalCents = totalFor(promoPricesInCents);
+    const capturedPricesInCents =
+      currency === "USD" && actualCents === promoTotalCents ? promoPricesInCents :
+      currency === "USD" && actualCents === regularTotalCents ? regularPricesInCents :
+      null;
+
+    if (!capturedPricesInCents) {
+      console.error("PayPal capture amount does not match the supplied ticket selection:", {
+        transactionID, amount, currency, ticketsValid: validTickets,
+        regularTotalCents, promoTotalCents, actualCents
+      });
+      return res.status(200).json({
+        success: true,
+        status: "COMPLETED",
+        orderID: capture.id,
+        transactionID,
+        amount,
+        currency,
+        emailSent: false,
+        message: "Payment is confirmed, but the ticket amount needs manual verification. Please contact the ticket team."
+      });
+    }
+
+    const analyticsItems = tickets.map(ticket => ({
+      item_id: ticket.type,
+      item_name: ticket.type,
+      quantity: ticket.quantity,
+      price: capturedPricesInCents[ticket.type] / 100
+    }));
     await sendGa4Purchase({
-      transactionId,
+      transactionId: transactionID,
       value: Number(amount),
       currency,
       items: analyticsItems,
@@ -115,43 +151,9 @@ export default async function handler(req, res) {
       Array.isArray(tickets) &&
       tickets.length > 0
     ) {
-      const allowedPricesInCents = {
-        "General Access": promoActive ? 1924 : 3848,
-        "Duo Ticket": promoActive ? 3463 : 6926,
-        "Priority Access IV (VIP)": promoActive ? 7695 : 15390,
-        "One Dance VVIP": 23089, "Premium Access for Two": 29241,
-        "Kese Table": 153905, "Joro Table": 384763, "Soco Table": 769527, "Star Boy Table": 1539053
-      };
+      const allowedPricesInCents = capturedPricesInCents;
 
-      const validTickets = tickets.every(ticket =>
-        Object.prototype.hasOwnProperty.call(allowedPricesInCents, ticket.type) &&
-        Number.isInteger(ticket.quantity) &&
-        ticket.quantity >= 1
-      );
-
-      if (!validTickets || currency !== "USD") {
-        return res.status(200).json({
-          success: true,
-          status: "COMPLETED",
-          orderID: capture.id,
-          transactionID,
-          amount,
-          currency,
-          emailSent: false,
-          message: "Payment confirmed, but ticket details need checking."
-        });
-      }
-
-      const expectedTotalCents = tickets.reduce(
-        (sum, ticket) =>
-          sum + allowedPricesInCents[ticket.type] * ticket.quantity,
-        0
-      );
-
-      const actualCents = Math.round(Number(amount) * 100);
-      const expectedCents = expectedTotalCents;
-
-      if (actualCents === expectedCents) {
+      {
         const ticketLines = tickets.map(ticket =>
           `${ticket.quantity} x ${ticket.type}`
         ).join(", ");
